@@ -1,11 +1,24 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-
-autonumber
-
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+class Individuo {
+    -IdentificacionInd:int
+    -GeneracionInd:int
+    -TurnosDeVida:int
+    -ProbReproduccion:float
+    -ProbClonacion:float
+    -ProbMuerte:float
+    +Individuo(IdentificacionInd,GeneracionInd,TurnosDeVida,ProbReproduccion,ProbClonacion,ProbMuerte)
+    +getIdentificacionInd():int
+    +getGeneracionInd():int
+    +getTurnosDeVida():int
+    +getProbReproduccion():float
+    +getProbClonacion():float
+    +getProbMuerte():float
+    +setIdentificacionInd(int IdentificacionInd):void
+    +setGeneracionInd(int GeneracionInd):void
+    +setTurnosDeVida(int TurnosDeVida):void
+    +setProbReproduccion(float ProbReproduccion):void
+    +setProbClonacion(float ProbClonacion):void
+    +setProbMuerte(float ProbMuerte):void
+}
 @enduml
