@@ -5,14 +5,18 @@ public class Individuo {
     private float ProbabilidadReproduccion;
     private float ProbabilidadClonacion;
     private float ProbabilidadMuerte;
+    private int x;
+    private int y;
 
-    public Individuo(int identificacionIndividuo,int generacionIndividuo,int turnosDeVida, float probabilidadReproduccion,float probabilidadClonacion,float probabilidadMuerte ){
+    public Individuo(int identificacionIndividuo,int generacionIndividuo,int turnosDeVida, float probabilidadReproduccion,float probabilidadClonacion,float probabilidadMuerte, int x, int y ){
         this.IdentificacionIndividuo=identificacionIndividuo;
         this.GeneracionIndividuo=generacionIndividuo;
         this.TurnosDeVida=turnosDeVida;
         this.ProbabilidadReproduccion=probabilidadReproduccion;
         this.ProbabilidadClonacion=probabilidadClonacion;
         this.ProbabilidadMuerte=probabilidadMuerte;
+        this.x=x;
+        this.y=y;
     }
 
     public int getIdentificacionIndividuo() {
@@ -61,5 +65,26 @@ public class Individuo {
 
     public void setProbabilidadMuerte(float probabilidadMuerte) {
         ProbabilidadMuerte = probabilidadMuerte;
+    }
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+    public int[] getPosicion(){
+        int[] posicion= new int[2];
+        posicion[0]=this.x;
+        posicion[1]=this.y;
+        return posicion;
     }
 }
