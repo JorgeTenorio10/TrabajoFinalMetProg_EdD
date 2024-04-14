@@ -87,4 +87,9 @@ public class Individuo {
         posicion[1]=this.y;
         return posicion;
     }
+    public void setPosicion(){
+        int[] posicion = new int[2];
+        posicion[0]=getX();
+        posicion[1]=getY();
+    }
 }

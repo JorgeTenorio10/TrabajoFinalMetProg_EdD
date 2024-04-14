@@ -10,8 +10,10 @@ class Individuo {
     -ProbReproduccion:float
     -ProbClonacion:float
     -ProbMuerte:float
+    -x:int
+    -y:int
     +Individuo(IdentificacionInd,GeneracionInd,TurnosDeVida,
-      ProbReproduccion,ProbClonacion,ProbMuerte)
+      ProbReproduccion,ProbClonacion,ProbMuerte,x,y)
     +getIdentificacionInd():int
     +getGeneracionInd():int
     +getTurnosDeVida():int
@@ -24,6 +26,12 @@ class Individuo {
     +setProbReproduccion(float ProbReproduccion):void
     +setProbClonacion(float ProbClonacion):void
     +setProbMuerte(float ProbMuerte):void
+    +getX():int
+    +getY():int
+    +setX(int x):void
+    +setY(int y):void
+    +getPosicion():int[2]
+    +setPosicion():void
 }
 class basico
 class Normal
