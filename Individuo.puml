@@ -1,5 +1,8 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+Individuo --> basico
+Individuo --> Normal
+Individuo --> Avanzado
 class Individuo {
     -IdentificacionInd:int
     -GeneracionInd:int
@@ -7,7 +10,8 @@ class Individuo {
     -ProbReproduccion:float
     -ProbClonacion:float
     -ProbMuerte:float
-    +Individuo(IdentificacionInd,GeneracionInd,TurnosDeVida,ProbReproduccion,ProbClonacion,ProbMuerte)
+    +Individuo(IdentificacionInd,GeneracionInd,TurnosDeVida,
+      ProbReproduccion,ProbClonacion,ProbMuerte)
     +getIdentificacionInd():int
     +getGeneracionInd():int
     +getTurnosDeVida():int
@@ -21,4 +25,7 @@ class Individuo {
     +setProbClonacion(float ProbClonacion):void
     +setProbMuerte(float ProbMuerte):void
 }
+class basico
+class Normal
+class Avanzado
 @enduml
