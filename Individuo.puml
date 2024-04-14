@@ -1,8 +1,8 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-Individuo --> basico
-Individuo --> Normal
-Individuo --> Avanzado
+Individuo <-- basico
+Individuo <-- Normal
+Individuo <-- Avanzado
 class Individuo {
     -IdentificacionInd:int
     -GeneracionInd:int
