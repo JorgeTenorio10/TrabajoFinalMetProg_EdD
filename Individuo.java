@@ -1,10 +1,10 @@
 public class Individuo {
-    private int IdentificacionIndividuo;
-    private int GeneracionIndividuo;
-    private int TurnosDeVida;
-    private float ProbabilidadReproduccion;
-    private float ProbabilidadClonacion;
-    private float ProbabilidadMuerte;
+    private static int IdentificacionIndividuo;
+    private static int GeneracionIndividuo;
+    private static int TurnosDeVida;
+    private static float ProbabilidadReproduccion;
+    private static float ProbabilidadClonacion;
+    private static float ProbabilidadMuerte;
     private int x;
     private int y;
 
@@ -19,51 +19,51 @@ public class Individuo {
         this.y=y;
     }
 
-    public int getIdentificacionIndividuo() {
+    public static int getIdentificacionIndividuo() {
         return IdentificacionIndividuo;
     }
 
-    public int getGeneracionIndividuo() {
+    public static int getGeneracionIndividuo() {
         return GeneracionIndividuo;
     }
 
-    public int getTurnosDeVida() {
+    public static int getTurnosDeVida() {
         return TurnosDeVida;
     }
 
-    public float getProbabilidadReproduccion() {
+    public static float getProbabilidadReproduccion() {
         return ProbabilidadReproduccion;
     }
 
-    public float getProbabilidadClonacion() {
+    public static float getProbabilidadClonacion() {
         return ProbabilidadClonacion;
     }
 
-    public float getProbabilidadMuerte() {
+    public static float getProbabilidadMuerte() {
         return ProbabilidadMuerte;
     }
 
-    public void setIdentificacionIndividuo(int identificacionIndividuo) {
+    public static void setIdentificacionIndividuo(int identificacionIndividuo) {
         IdentificacionIndividuo = identificacionIndividuo;
     }
 
-    public void setGeneracionIndividuo(int generacionIndividuo) {
+    public static void setGeneracionIndividuo(int generacionIndividuo) {
         GeneracionIndividuo = generacionIndividuo;
     }
 
-    public void setTurnosDeVida(int turnosDeVida) {
+    public static void setTurnosDeVida(int turnosDeVida) {
         TurnosDeVida = turnosDeVida;
     }
 
-    public void setProbabilidadClonacion(float probabilidadClonacion) {
+    public static void setProbabilidadClonacion(float probabilidadClonacion) {
         ProbabilidadClonacion = probabilidadClonacion;
     }
 
-    public void setProbabilidadReproduccion(float probabilidadReproduccion) {
+    public static void setProbabilidadReproduccion(float probabilidadReproduccion) {
         ProbabilidadReproduccion = probabilidadReproduccion;
     }
 
-    public void setProbabilidadMuerte(float probabilidadMuerte) {
+    public static void setProbabilidadMuerte(float probabilidadMuerte) {
         ProbabilidadMuerte = probabilidadMuerte;
     }
     public int getY() {
@@ -92,4 +92,5 @@ public class Individuo {
         posicion[0]=getX();
         posicion[1]=getY();
     }
+
 }
