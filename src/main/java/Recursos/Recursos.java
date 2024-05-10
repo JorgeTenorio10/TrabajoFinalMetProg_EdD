@@ -1,3 +1,5 @@
+package Recursos;
+
 public abstract class Recursos {
     private int x;
     private int y;

@@ -1,3 +1,5 @@
+package Recursos;
+
 public class Agua extends Recursos {
 
     @Override

@@ -1,4 +1,8 @@
-public class Biblioteca extends Recursos{
+package Recursos;
+
+import Recursos.Recursos;
+
+public class Tesoro extends Recursos {
     private int AumentoProbabilidad;
 
     public int getAumentoProbabilidad() {
@@ -11,6 +15,6 @@ public class Biblioteca extends Recursos{
 
     @Override
     public void efecto() {
-        Individuo.setProbabilidadClonacion(Individuo.getProbabilidadClonacion()+Individuo.getProbabilidadClonacion()*getAumentoProbabilidad());
+        Individuo.setProbabilidadReproduccion(Individuo.getProbabilidadReproduccion()+ Individuo.getProbabilidadReproduccion()*getAumentoProbabilidad());
     }
 }

@@ -1,3 +1,5 @@
+package Recursos;
+
 public class Individuo {
     private static int IdentificacionIndividuo;
     private static int GeneracionIndividuo;
