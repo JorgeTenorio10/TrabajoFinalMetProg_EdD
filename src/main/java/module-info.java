@@ -11,6 +11,8 @@ module org.example.PantallaInicio {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
+    requires org.apache.logging.log4j;
+
     opens org.example.PantallaInicio to javafx.fxml;
     exports org.example.PantallaInicio;
 }
