@@ -2,12 +2,15 @@ package org.example.PantallaInicio;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ParametrizableController {
+    @FXML
+    private TextField campoNombre;
     @FXML
     private Slider sliderTamañoAltura;
     @FXML
@@ -57,6 +60,7 @@ public class ParametrizableController {
         }
     }
     protected void updateGUIwithModel() {
+        campoNombre.textProperty().bindBidirectional(model.nombreProperty());
         sliderTamañoAltura.valueProperty().bindBidirectional(model.tamañoAlturaProperty());
         sliderTamañoAnchura.valueProperty().bindBidirectional(model.tamañoAnchuraProperty());
         sliderProbabilidadAparicionObjetos.valueProperty().bindBidirectional(model.probabilidadAparicionObjetosProperty());

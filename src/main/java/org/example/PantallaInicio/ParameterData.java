@@ -1,6 +1,7 @@
 package org.example.PantallaInicio;
 
 public class ParameterData {
+    private String nombre;
     private int tamañoAltura;
     private int tamañoAnchura;
     private int probabilidadReproduccion;
@@ -13,7 +14,8 @@ public class ParameterData {
     private int probAparicionBiblioteca;
     private int probAparicionPozo;
     private int probAparicionTesoro;
-    public ParameterData(int tamañoAltura, int tamañoAnchura, int probabilidadReproduccion, int probabilidadAparicionObjetos, int probabilidadAumentoBiblioteca,int probabilidadAumentoTesoro, int probAparicionAgua, int probAparicionBiblioteca, int probAparicionComida, int probAparicionMontaña, int probAparicionPozo, int probAparicionTesoro){
+    public ParameterData(String nombre,int tamañoAltura, int tamañoAnchura, int probabilidadReproduccion, int probabilidadAparicionObjetos, int probabilidadAumentoBiblioteca,int probabilidadAumentoTesoro, int probAparicionAgua, int probAparicionBiblioteca, int probAparicionComida, int probAparicionMontaña, int probAparicionPozo, int probAparicionTesoro){
+        this.nombre=nombre;
         this.tamañoAltura=tamañoAltura;
         this.tamañoAnchura=tamañoAnchura;
         this.probabilidadAumentoBiblioteca=probabilidadAumentoBiblioteca;
@@ -122,5 +124,13 @@ public class ParameterData {
 
     public void setProbAparicionTesoro(int probAparicionTesoro) {
         this.probAparicionTesoro = probAparicionTesoro;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

@@ -1,11 +1,10 @@
 package org.example.PantallaInicio;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 public class ParameterDataProperties {
     protected ParameterData original;
+    private StringProperty nombre=new SimpleStringProperty();
 
     private IntegerProperty tamañoAltura= new SimpleIntegerProperty();
     private IntegerProperty tamañoAnchura= new SimpleIntegerProperty();
@@ -23,6 +22,7 @@ public class ParameterDataProperties {
         setOriginal(original);
     }
     public void commit(){
+        original.setNombre(nombre.get());
         original.setTamañoAltura(tamañoAltura.get());
         original.setTamañoAnchura(tamañoAnchura.get());
         original.setProbabilidadAparicionObjetos(probabilidadAparicionObjetos.get());
@@ -37,6 +37,7 @@ public class ParameterDataProperties {
         original.setProbAparicionPozo(probAparicionPozo.get());
     }
     public void rollback(){
+        nombre.set(original.getNombre());
         tamañoAltura.set(original.getTamañoAltura());
         tamañoAnchura.set(original.getTamañoAnchura());
         probabilidadAparicionObjetos.set(original.getProbabilidadAparicionObjetos());
@@ -57,6 +58,9 @@ public class ParameterDataProperties {
     public void setOriginal(ParameterData original) {
         this.original = original;
         rollback();
+    }
+    public Property<String> nombreProperty(){
+        return nombre;
     }
     public Property<Number> tamañoAlturaProperty(){
         return tamañoAltura;
