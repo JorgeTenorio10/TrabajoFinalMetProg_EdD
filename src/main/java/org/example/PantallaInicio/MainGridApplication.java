@@ -1,4 +1,4 @@
-package es.uah.matcomp.mp.pfinal.componentesylogs;
+package org.example.PantallaInicio;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -23,6 +23,7 @@ public class MainGridApplication extends Application {
 
     private final String[] recursos = {"Agua", "Comida", "Turnos", "Montaña", "Pozo", "Tesoro"};
     private final int maxRecursosCelda = 3;
+    private ParameterData parameterData;
     @Override
     public void start(Stage primaryStage) {
 
@@ -31,8 +32,8 @@ public class MainGridApplication extends Application {
         GridPane mainGrid = new GridPane();
 
 
-        int n = 14;
-        int m = 8;
+        int n = parameterData.getTamañoAnchura();
+        int m = parameterData.getTamañoAnchura();
         Random random = new Random();
 
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
