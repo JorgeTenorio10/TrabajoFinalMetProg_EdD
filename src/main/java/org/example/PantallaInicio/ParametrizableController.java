@@ -1,6 +1,7 @@
 package org.example.PantallaInicio;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -17,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 import java.net.URL;
 import java.util.*;
 
-public class ParametrizableController {
+public class ParametrizableController implements Initializable {
     @FXML
     private TextField campoNombre;
     @FXML

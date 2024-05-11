@@ -6,13 +6,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController {
+public class HelloController implements Initializable {
     protected StringProperty texto = new SimpleStringProperty("No Hay Nada");
     protected IntegerProperty medida = new SimpleIntegerProperty(0);
     private ParameterData parametrosData= new ParameterData("Juan",10,10,50,60, 40,75, 15,15,20,20,10,20);
@@ -47,5 +48,10 @@ public class HelloController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        System.out.println("Inicializacion en ejecucion del controlador\n");
+
     }
 }
