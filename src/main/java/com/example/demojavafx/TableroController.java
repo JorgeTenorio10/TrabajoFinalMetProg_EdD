@@ -1,6 +1,9 @@
 package com.example.demojavafx;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -13,7 +16,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class TableroController {
+public class TableroController  {
+    /*
+    private int tamañoAltura;
+    private int tamañoAnchura;
+
+    public void setTamañoAltura(int tamañoAltura) {
+        this.tamañoAltura = tamañoAltura;
+    }
+
+    public void setTamañoAnchura(int tamañoAnchura) {
+        this.tamañoAnchura = tamañoAnchura;
+    }
+
+     */
+
 
     @FXML
     private Label welcomeText;
@@ -21,53 +38,33 @@ public class TableroController {
     @FXML
     private GridPane tableroDeJuego;
 
-    private static final Logger log = LogManager.getLogger(TableroController.class);
-
-    private final String[] recursos = {"Agua", "Comida", "Turnos", "Montaña", "Pozo", "Tesoro"};
-    private final int maxRecursosCelda = 3;
-    private Stage scene;
-
     @FXML
-    protected void onTableroDeJuego() {
+    protected void initialize() {
         welcomeText.setText("Cargando el tablero de juego");
 
-        Stage stage = (Stage) tableroDeJuego.getScene().getWindow();
-
-        int n = 14;
-        int m = 8;
+        int n = 10;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
+        int m = 10;//tamañoAltura; // Usar el valor de tamañoAltura del slider
         Random random = new Random();
-
-        double AnchuraCelda = Screen.getPrimary().getVisualBounds().getWidth() / n;
-        double AlturaCelda = Screen.getPrimary().getVisualBounds().getHeight() / m;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                VBox layout = new VBox();
-                layout.setAlignment(Pos.CENTER);
-                layout.setMinSize(AnchuraCelda - 1, AlturaCelda - 2);
-                layout.setStyle("-fx-border-color: black; -fx-text-alignment: right;");
-                List<String> RecursosAleatorios = new ArrayList<>(List.of(recursos));
-                Collections.shuffle(RecursosAleatorios);
-                int labelsToShow = random.nextInt(maxRecursosCelda + 1);
+                VBox cellLayout = new VBox();
+                cellLayout.setAlignment(Pos.CENTER);
+                cellLayout.setMinSize(50, 50);
+                cellLayout.setStyle("-fx-border-color: black;");
+
+                List<String> recursos = new ArrayList<>(List.of("Agua", "Comida", "Turnos", "Montaña", "Pozo", "Tesoro"));
+                Collections.shuffle(recursos);
+                int labelsToShow = random.nextInt(4); // Entre 0 y 3 recursos por celda
                 for (int k = 0; k < labelsToShow; k++) {
-                    Label label = new Label(RecursosAleatorios.get(k));
-                    layout.getChildren().add(label);
+                    Label label = new Label(recursos.get(k));
+                    cellLayout.getChildren().add(label);
                 }
-                tableroDeJuego.add(layout, i, j);
+
+                tableroDeJuego.add(cellLayout, i, j);
             }
         }
-
-        stage.close(); // Cerrar la ventana actual después de cargar el tablero
-        log.trace("Enviando una traza de ejecución");
-        log.debug("Enviado un debug");
-        log.info("Enviando un info");
-        log.warn("Enviando un aviso");
-        log.error("Enviando un error");
-        log.fatal("Enviando una explosión fatal");
-
-        log.info("Tablero cargado correctamente");
     }
-    public void setStage(Stage s){
-        this.scene = s;
-    }
+
 }
+

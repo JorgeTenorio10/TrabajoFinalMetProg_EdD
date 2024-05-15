@@ -38,7 +38,7 @@ public class HelloController implements Initializable {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("parameters-view.fxml"));
         try {
-            Scene scene = new Scene(fxmlLoader.load(), 420, 340);
+            Scene scene = new Scene(fxmlLoader.load(), 520, 740);
             stage.setTitle("Establezca parámetros: ");
             stage.setScene(scene);
             ParameterController p = fxmlLoader.getController();

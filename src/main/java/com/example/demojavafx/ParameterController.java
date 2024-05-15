@@ -2,6 +2,8 @@ package com.example.demojavafx;
 
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,6 +65,58 @@ public class ParameterController implements Initializable {
     @FXML
     private Slider sliderProbAparicionTesoro;
 
+    @FXML
+    private GridPane tableroDeJuego;
+
+    private TableroController tableroController;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.print("Inicialización en ejecución del controlador de parámetros\n");
+
+
+
+        if (model != null) {
+            this.updateGUIwithModel();
+        }
+
+        /*
+        }
+        if (sliderTamañoAltura != null && sliderTamañoAnchura != null) {
+            sliderTamañoAltura.valueProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                    actualizarTablero();
+                }
+            });
+
+            sliderTamañoAnchura.valueProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                    actualizarTablero();
+                }
+            });
+        }
+    }
+
+
+
+    private void actualizarTablero() {
+        int tamañoAltura = (int) sliderTamañoAltura.getValue();
+        int tamañoAnchura = (int) sliderTamañoAnchura.getValue();
+        tableroController.setTamañoAltura(tamañoAltura);
+        tableroController.setTamañoAnchura(tamañoAnchura);
+        tableroController.initialize();
+    }
+
+    public void setTableroController(TableroController tableroController) {
+        this.tableroController = tableroController;
+
+
+         */
+    }
+
+
 
 
     /**
@@ -92,36 +146,46 @@ public class ParameterController implements Initializable {
     @FXML protected void onBotonCerrarClick(){
         scene.close();
     }
-    @FXML
-    protected void onAbrirTableroClick() {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(TableroController.class.getResource("tablero-view.fxml"));
-        try {
-            Scene scene = new Scene(fxmlLoader.load(), 420, 340);
-            stage.setScene(scene);
-            TableroController controller = fxmlLoader.getController();
-            controller.setStage(stage);
-            stage.setTitle("Tablero del Juego");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void setStage(Stage s){
+        this.scene = s;
     }
 
+
+
+@FXML
+    protected void onAbrirTableroClick() {
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
+        Parent root = fxmlLoader.load();
+        TableroController tableroController = fxmlLoader.getController();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getWidth(); // Ancho deseado
+        scene.getHeight(); // Alto deseado
+        stage.setScene(scene);
+        stage.setTitle("Tablero del Juego");
+        stage.show();
+
+        /* Configura el tamaño del tablero en el controlador del tablero
+        if (sliderTamañoAltura != null && sliderTamañoAnchura != null) {
+            tableroController.setTamañoAltura((int) sliderTamañoAltura.getValue());
+            tableroController.setTamañoAnchura((int) sliderTamañoAnchura.getValue());
+        }
+
+        ParameterController parameterController = new ParameterController();
+
+        // Carga los datos del modelo en el controlador de parámetros
+        parameterController.loadUserData(model);
+
+        */
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
 
     /**
      * Métodos de configuración
      **/
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.print("Inicialización en ejecución del controlador de parámetros\n");
-
-
-        if (model != null) {
-            this.updateGUIwithModel();
-        }
-    }
-
 
     /**
      * Este método se encarga de conectar los datos del modelo con el GUI
@@ -149,10 +213,5 @@ public class ParameterController implements Initializable {
         this.model = parametrosData;
         this.updateGUIwithModel();
     }
-
-    public void setStage(Stage s){
-        this.scene = s;
-    }
-
 
 }
