@@ -1,10 +1,14 @@
 package com.example.demojavafx;
 
+
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -13,8 +17,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -57,6 +64,7 @@ public class ParameterController implements Initializable {
     private Slider sliderProbAparicionTesoro;
 
 
+
     /**
      * Controlador con modelo de datos en el que trabajar
      **/
@@ -84,6 +92,22 @@ public class ParameterController implements Initializable {
     @FXML protected void onBotonCerrarClick(){
         scene.close();
     }
+    @FXML
+    protected void onAbrirTableroClick() {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(TableroController.class.getResource("tablero-view.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 420, 340);
+            stage.setScene(scene);
+            TableroController controller = fxmlLoader.getController();
+            controller.setStage(stage);
+            stage.setTitle("Tablero del Juego");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Métodos de configuración
@@ -92,10 +116,12 @@ public class ParameterController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.print("Inicialización en ejecución del controlador de parámetros\n");
 
+
         if (model != null) {
             this.updateGUIwithModel();
         }
     }
+
 
     /**
      * Este método se encarga de conectar los datos del modelo con el GUI
@@ -127,4 +153,6 @@ public class ParameterController implements Initializable {
     public void setStage(Stage s){
         this.scene = s;
     }
+
+
 }

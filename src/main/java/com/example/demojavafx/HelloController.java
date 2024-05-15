@@ -4,12 +4,14 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -21,6 +23,7 @@ public class HelloController implements Initializable {
 
     private ParameterDataModel parametrosData = new ParameterDataModel("Juan", 10, 15,20,20,20,20,20,20,20,20,20,20);
     private ParameterDataModelProperties  modeloParaGUICompartido = new ParameterDataModelProperties(parametrosData);
+;
 
 
 
@@ -47,6 +50,7 @@ public class HelloController implements Initializable {
         }
 
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
