@@ -1,6 +1,9 @@
-package org.example.PantallaInicio;
+package com.example.demojavafx;
 
-public class ParameterData {
+/** Esta es la clase del modelo de datos básico **/
+public class ParameterDataModel {
+    private int vida;
+    private int velocidad;
     private String nombre;
     private int tamañoAltura;
     private int tamañoAnchura;
@@ -14,7 +17,7 @@ public class ParameterData {
     private int probAparicionBiblioteca;
     private int probAparicionPozo;
     private int probAparicionTesoro;
-    public ParameterData(String nombre,int tamañoAltura, int tamañoAnchura, int probabilidadReproduccion, int probabilidadAparicionObjetos, int probabilidadAumentoBiblioteca,int probabilidadAumentoTesoro, int probAparicionAgua, int probAparicionBiblioteca, int probAparicionComida, int probAparicionMontaña, int probAparicionPozo, int probAparicionTesoro){
+    public ParameterDataModel(String nombre,int tamañoAltura, int tamañoAnchura, int probabilidadReproduccion, int probabilidadAparicionObjetos, int probabilidadAumentoBiblioteca,int probabilidadAumentoTesoro, int probAparicionAgua, int probAparicionBiblioteca, int probAparicionComida, int probAparicionMontaña, int probAparicionPozo, int probAparicionTesoro){
         this.nombre=nombre;
         this.tamañoAltura=tamañoAltura;
         this.tamañoAnchura=tamañoAnchura;
@@ -30,6 +33,23 @@ public class ParameterData {
         this.probAparicionMontaña=probAparicionMontaña;
     }
 
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public int getVida() {
+        return vida;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    /** Setters y Getters **/
     public int getTamañoAltura() {
         return tamañoAltura;
     }
@@ -125,6 +145,7 @@ public class ParameterData {
     public void setProbAparicionTesoro(int probAparicionTesoro) {
         this.probAparicionTesoro = probAparicionTesoro;
     }
+
 
     public String getNombre() {
         return nombre;

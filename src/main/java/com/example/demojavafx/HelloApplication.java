@@ -1,4 +1,4 @@
-package org.example.PantallaInicio;
+package com.example.demojavafx;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +10,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/org/example/PantallaInicio/Pantalla Inicial v1.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 240, 320);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 620, 440);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

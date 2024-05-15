@@ -1,10 +1,16 @@
-package org.example.PantallaInicio;
+package com.example.demojavafx;
 
 import javafx.beans.property.*;
 
-public class ParameterDataProperties {
-    protected ParameterData original;
-    private StringProperty nombre=new SimpleStringProperty();
+
+/** Esta es una clase de utilidad, que permite generar unas propiedades observables para el GUI a partir
+ *  de los datos del modelo original de java.
+ *  Tiene los métodos de commit y rollback para establecer la operación final de traspasar los datos modificados
+ *  o reiniciarlos según se quiera.
+ */
+public class ParameterDataModelProperties {
+    //Modelo de datos original
+    protected ParameterDataModel original;
 
     private IntegerProperty tamañoAltura= new SimpleIntegerProperty();
     private IntegerProperty tamañoAnchura= new SimpleIntegerProperty();
@@ -18,11 +24,16 @@ public class ParameterDataProperties {
     private IntegerProperty probAparicionBiblioteca= new SimpleIntegerProperty();
     private IntegerProperty probAparicionPozo= new SimpleIntegerProperty();
     private IntegerProperty probAparicionTesoro= new SimpleIntegerProperty();
-    public ParameterDataProperties(ParameterData original){
+
+    private IntegerProperty velocidad = new SimpleIntegerProperty();
+    private IntegerProperty vida = new SimpleIntegerProperty();
+    private StringProperty nombre = new SimpleStringProperty();
+
+    public ParameterDataModelProperties(ParameterDataModel original){
         setOriginal(original);
     }
+
     public void commit(){
-        original.setNombre(nombre.get());
         original.setTamañoAltura(tamañoAltura.get());
         original.setTamañoAnchura(tamañoAnchura.get());
         original.setProbabilidadAparicionObjetos(probabilidadAparicionObjetos.get());
@@ -35,9 +46,12 @@ public class ParameterDataProperties {
         original.setProbAparicionMontaña(probAparicionMontaña.get());
         original.setProbAparicionTesoro(probAparicionTesoro.get());
         original.setProbAparicionPozo(probAparicionPozo.get());
+        original.setVelocidad(velocidad.get());
+        original.setVida(vida.get());
+        original.setNombre(nombre.get());
     }
+
     public void rollback(){
-        nombre.set(original.getNombre());
         tamañoAltura.set(original.getTamañoAltura());
         tamañoAnchura.set(original.getTamañoAnchura());
         probabilidadAparicionObjetos.set(original.getProbabilidadAparicionObjetos());
@@ -50,16 +64,30 @@ public class ParameterDataProperties {
         probAparicionMontaña.set(original.getProbAparicionMontaña());
         probAparicionTesoro.set(original.getProbAparicionTesoro());
         probAparicionPozo.set(original.getProbAparicionPozo());
+        velocidad.set(original.getVelocidad());
+        vida.set(original.getVida());
+        nombre.set(original.getNombre());
     }
-    public ParameterData getOriginal() {
+
+    public ParameterDataModel getOriginal(){
         return original;
     }
 
-    public void setOriginal(ParameterData original) {
+    public void setOriginal(ParameterDataModel original){
         this.original = original;
-        rollback();
+        rollback(); //Se inicializan los properties.
+
     }
-    public Property<String> nombreProperty(){
+
+    public Property<Number> velocidadProperty() {
+        return velocidad;
+    }
+
+    public Property<Number> vidaProperty() {
+        return vida;
+    }
+
+    public Property<String> nombreProperty() {
         return nombre;
     }
     public Property<Number> tamañoAlturaProperty(){
