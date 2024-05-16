@@ -53,16 +53,16 @@ public class HelloController implements Initializable {
         }
 
     }
-    /*
+
     @FXML
-    protected void onMiBotonCargarPartida(){
+    protected void onMiBotonCargarPartida() throws IOException {
         Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(""));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("cargarPartida.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 620, 740);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
-    }*/
+    }
 
 
     @Override

@@ -16,5 +16,6 @@
    </Label>
     <Label fx:id="welcomeText" />
    <Button mnemonicParsing="false" onAction="#onMiBotonNuevaVentanaParametrosClick" text="Abrir ventana de parámetros" textFill="#3a37ed" />
+   <Button mnemonicParsing="false" onAction="#onMiBotonCargarPartida" text="Cargar Partida" textFill="#0022ff" />
 
 </VBox>
