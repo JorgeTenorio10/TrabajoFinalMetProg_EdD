@@ -35,10 +35,6 @@ public class ParameterController implements Initializable {
      **/
 
     @FXML
-    private Slider sliderVelocidad;
-    @FXML
-    private Slider sliderVida;
-    @FXML
     private TextField textfieldNombre;
     @FXML
     private Slider sliderTamañoAltura;
@@ -158,6 +154,7 @@ public class ParameterController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
         Parent root = fxmlLoader.load();
         TableroController tableroController = fxmlLoader.getController();
+        tableroController.setDimensions((int)sliderTamañoAltura.getValue(),(int)sliderTamañoAnchura.getValue());
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         scene.getWidth(); // Ancho deseado

@@ -1,5 +1,9 @@
 package com.example.demojavafx;
 
+import com.google.gson.Gson;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -50,6 +53,16 @@ public class HelloController implements Initializable {
         }
 
     }
+    /*
+    @FXML
+    protected void onMiBotonCargarPartida(){
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(""));
+        Scene scene = new Scene(fxmlLoader.load(), 620, 740);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.show();
+    }*/
 
 
     @Override

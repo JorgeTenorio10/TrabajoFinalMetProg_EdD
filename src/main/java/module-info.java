@@ -8,6 +8,7 @@ module com.example.demojavafx {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires org.apache.logging.log4j;
+    requires com.google.gson;
 
 
     opens com.example.demojavafx to javafx.fxml;

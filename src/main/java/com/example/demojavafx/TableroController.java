@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Random;
 
 public class TableroController  {
-    /*
     private int tamañoAltura;
     private int tamañoAnchura;
 
@@ -29,7 +28,6 @@ public class TableroController  {
         this.tamañoAnchura = tamañoAnchura;
     }
 
-     */
 
 
     @FXML
@@ -38,12 +36,9 @@ public class TableroController  {
     @FXML
     private GridPane tableroDeJuego;
 
-    @FXML
-    protected void initialize() {
-        welcomeText.setText("Cargando el tablero de juego");
-
-        int n = 10;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
-        int m = 10;//tamañoAltura; // Usar el valor de tamañoAltura del slider
+    public void setDimensions(int altura, int anchura){
+        int n=altura;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
+        int m=anchura; // Usar el valor de tamañoAltura del slider
         Random random = new Random();
 
         for (int i = 0; i < n; i++) {
@@ -53,7 +48,7 @@ public class TableroController  {
                 cellLayout.setMinSize(50, 50);
                 cellLayout.setStyle("-fx-border-color: black;");
 
-                List<String> recursos = new ArrayList<>(List.of("Agua", "Comida", "Turnos", "Montaña", "Pozo", "Tesoro"));
+                List<String> recursos = new ArrayList<>(List.of("Agua", "Comida",  "Montaña", "Pozo","Biblioteca", "Tesoro"));
                 Collections.shuffle(recursos);
                 int labelsToShow = random.nextInt(4); // Entre 0 y 3 recursos por celda
                 for (int k = 0; k < labelsToShow; k++) {
@@ -64,6 +59,34 @@ public class TableroController  {
                 tableroDeJuego.add(cellLayout, i, j);
             }
         }
+    }
+
+    @FXML
+    protected void initialize() {
+        welcomeText.setText("Cargando el tablero de juego");
+
+        /*int n=this.tamañoAnchura;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
+        int m=this.tamañoAltura; // Usar el valor de tamañoAltura del slider
+        Random random = new Random();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                VBox cellLayout = new VBox();
+                cellLayout.setAlignment(Pos.CENTER);
+                cellLayout.setMinSize(50, 50);
+                cellLayout.setStyle("-fx-border-color: black;");
+
+                List<String> recursos = new ArrayList<>(List.of("Agua", "Comida",  "Montaña", "Pozo","Biblioteca", "Tesoro"));
+                Collections.shuffle(recursos);
+                int labelsToShow = random.nextInt(4); // Entre 0 y 3 recursos por celda
+                for (int k = 0; k < labelsToShow; k++) {
+                    Label label = new Label(recursos.get(k));
+                    cellLayout.getChildren().add(label);
+                }
+
+                tableroDeJuego.add(cellLayout, i, j);
+            }
+        }*/
     }
 
 }
