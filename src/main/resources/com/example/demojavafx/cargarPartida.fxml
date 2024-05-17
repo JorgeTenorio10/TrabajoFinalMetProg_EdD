@@ -7,12 +7,11 @@
 
 
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.HelloController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.CargarPartidaController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <Label text="Introduce el nombre de la partida que deseas cargar" textAlignment="CENTER" textFill="RED"/>
    <TextField fx:id="TextFieldCargarPartida" />
-
-
+   <Button mnemonicParsing="false" onAction="#onCargarPartidaButton" text="Iniciar la partida que deseas cargar" textFill="#3a37ed" />
    </VBox>

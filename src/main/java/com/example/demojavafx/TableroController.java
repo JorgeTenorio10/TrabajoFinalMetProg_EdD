@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -27,6 +28,8 @@ public class TableroController  {
     public void setTamañoAnchura(int tamañoAnchura) {
         this.tamañoAnchura = tamañoAnchura;
     }
+    @FXML
+    private ComboBox<String> individuosComboBox;
 
 
 
@@ -37,8 +40,8 @@ public class TableroController  {
     private GridPane tableroDeJuego;
 
     public void setDimensions(int altura, int anchura){
-        int n=altura;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
-        int m=anchura; // Usar el valor de tamañoAltura del slider
+        int m=altura;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
+        int n=anchura; // Usar el valor de tamañoAltura del slider
         Random random = new Random();
 
         for (int i = 0; i < n; i++) {
@@ -64,6 +67,11 @@ public class TableroController  {
     @FXML
     protected void initialize() {
         welcomeText.setText("Cargando el tablero de juego");
+            // Añadir los tipos de individuos al ComboBox
+        individuosComboBox.getItems().addAll("Basico", "Normal", "Avanzado");
+            // Opcional: Seleccionar el primer elemento por defecto
+        individuosComboBox.getSelectionModel().selectFirst();
+
 
         /*int n=this.tamañoAnchura;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
         int m=this.tamañoAltura; // Usar el valor de tamañoAltura del slider

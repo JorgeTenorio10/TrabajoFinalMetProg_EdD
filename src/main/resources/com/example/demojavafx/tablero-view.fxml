@@ -9,11 +9,23 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <Label text="Tablero del Juego" textAlignment="CENTER" textFill="RED">
-        <font>
-            <Font name="System Bold" size="18.0" />
-        </font>
-    </Label>
-    <Label fx:id="welcomeText" />
-    <GridPane fx:id="tableroDeJuego"/>
+    <TabPane tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Tablero de juego">
+                <Label text="Tablero del Juego" textAlignment="CENTER" textFill="RED">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Label fx:id="welcomeText" />
+                <GridPane fx:id="tableroDeJuego" />
+            </Tab>
+            <Tab text="Insertar individuo">
+                <Label text="Tipo de individuo" />
+                <ComboBox fx:id="individuosComboBox" prefWidth="200.0" />
+                <Label text="Posicion en la que insertar"/>
+            </Tab>
+        </tabs>
+    </TabPane>
+
 </VBox>
