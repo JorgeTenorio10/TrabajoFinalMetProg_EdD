@@ -69,50 +69,39 @@ public class ParameterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.print("Inicialización en ejecución del controlador de parámetros\n");
-
-
-
         if (model != null) {
             this.updateGUIwithModel();
         }
+        sliderTamañoAltura.setMin(1);
+        sliderTamañoAltura.setMax(10);
+        sliderTamañoAltura.setValue(10); // Valor inicial
 
-        /*
-        }
-        if (sliderTamañoAltura != null && sliderTamañoAnchura != null) {
-            sliderTamañoAltura.valueProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                    actualizarTablero();
-                }
-            });
+        sliderTamañoAnchura.setMin(1);
+        sliderTamañoAnchura.setMax(20);
+        sliderTamañoAnchura.setValue(20); // Valor inicial
 
-            sliderTamañoAnchura.valueProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                    actualizarTablero();
-                }
-            });
-        }
+        sliderTamañoAltura.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                actualizarTablero();
+            }
+        });
+
+        sliderTamañoAnchura.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                actualizarTablero();
+            }
+        });
     }
-
-
 
     private void actualizarTablero() {
-        int tamañoAltura = (int) sliderTamañoAltura.getValue();
-        int tamañoAnchura = (int) sliderTamañoAnchura.getValue();
-        tableroController.setTamañoAltura(tamañoAltura);
-        tableroController.setTamañoAnchura(tamañoAnchura);
-        tableroController.initialize();
+        if (tableroController != null) {
+            int tamañoAltura = (int) sliderTamañoAltura.getValue();
+            int tamañoAnchura = (int) sliderTamañoAnchura.getValue();
+            tableroController.setDimensions(tamañoAltura, tamañoAnchura);
+        }
     }
-
-    public void setTableroController(TableroController tableroController) {
-        this.tableroController = tableroController;
-
-
-         */
-    }
-
-
 
 
     /**
@@ -154,11 +143,14 @@ public class ParameterController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
         Parent root = fxmlLoader.load();
         TableroController tableroController = fxmlLoader.getController();
+        int altura = (int) sliderTamañoAltura.getValue();
+        int anchura = (int) sliderTamañoAnchura.getValue();
         tableroController.setDimensions((int)sliderTamañoAltura.getValue(),(int)sliderTamañoAnchura.getValue());
         Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        scene.getWidth(); // Ancho deseado
-        scene.getHeight(); // Alto deseado
+        int cellSize = 70;
+        int windowWidth = anchura * cellSize + 70;
+        int windowHeight = altura * cellSize + 150;
+        Scene scene = new Scene(root, windowWidth, windowHeight);
         stage.setScene(scene);
         stage.setTitle("Tablero del Juego");
         stage.show();

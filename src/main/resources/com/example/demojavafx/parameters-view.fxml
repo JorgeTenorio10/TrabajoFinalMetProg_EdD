@@ -36,9 +36,9 @@
                          <VBox>
                              <children>
                                  <Label text="Altura"/>
-                                 <Slider fx:id="sliderTamañoAltura" blockIncrement="1.0"  majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="1.0" />
+                                 <Slider fx:id="sliderTamañoAltura" blockIncrement="1.0"  majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="1.0" />
                                  <Label text="Anchura"/>
-                                 <Slider fx:id="sliderTamañoAnchura" blockIncrement="1.0" layoutX="63.0" layoutY="106.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="1.0" />
+                                 <Slider fx:id="sliderTamañoAnchura" blockIncrement="1.0" layoutX="63.0" layoutY="507.0" majorTickUnit="1.0" max="20.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="1.0" />
                              </children>
                          </VBox>
                      </children>

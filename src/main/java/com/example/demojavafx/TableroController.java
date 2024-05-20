@@ -1,37 +1,25 @@
 package com.example.demojavafx;
-import javafx.application.Application;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class TableroController  {
+public class TableroController {
     private int tamañoAltura;
     private int tamañoAnchura;
 
-    public void setTamañoAltura(int tamañoAltura) {
-        this.tamañoAltura = tamañoAltura;
-    }
-
-    public void setTamañoAnchura(int tamañoAnchura) {
-        this.tamañoAnchura = tamañoAnchura;
-    }
     @FXML
     private ComboBox<String> individuosComboBox;
-
-
 
     @FXML
     private Label welcomeText;
@@ -39,63 +27,97 @@ public class TableroController  {
     @FXML
     private GridPane tableroDeJuego;
 
-    public void setDimensions(int altura, int anchura){
-        int m=altura;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
-        int n=anchura; // Usar el valor de tamañoAltura del slider
+    @FXML
+    private TextField posicionXTextField;
+
+    @FXML
+    private TextField posicionYTextField;
+
+    @FXML
+    private void initialize() {
+        welcomeText.setText("Cargando el tablero de juego");
+        // Añadir los tipos de individuos al ComboBox
+        individuosComboBox.getItems().addAll("Básico", "Normal", "Avanzado");
+        // Opcional: Seleccionar el primer elemento por defecto
+        individuosComboBox.getSelectionModel().selectFirst();
+    }
+
+    public void setDimensions(int altura, int anchura) {
+        this.tamañoAltura = altura;
+        this.tamañoAnchura = anchura;
+
+        // Limpiar y configurar el tablero de juego
+        tableroDeJuego.getChildren().clear();
+        tableroDeJuego.getColumnConstraints().clear();
+        tableroDeJuego.getRowConstraints().clear();
+
+        int cellSize = 70; // Tamaño de cada celda
         Random random = new Random();
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+        for (int i = 0; i < altura; i++) {
+            for (int j = 0; j < anchura; j++) {
                 VBox cellLayout = new VBox();
                 cellLayout.setAlignment(Pos.CENTER);
-                cellLayout.setMinSize(50, 50);
+                cellLayout.setMinSize(cellSize, cellSize);
+                cellLayout.setMaxSize(cellSize, cellSize);
                 cellLayout.setStyle("-fx-border-color: black;");
 
-                List<String> recursos = new ArrayList<>(List.of("Agua", "Comida",  "Montaña", "Pozo","Biblioteca", "Tesoro"));
-                Collections.shuffle(recursos);
+                // Añadir recursos a la celda
+                String[] recursos = {"Agua", "Comida", "Montaña", "Pozo", "Biblioteca", "Tesoro"};
                 int labelsToShow = random.nextInt(4); // Entre 0 y 3 recursos por celda
                 for (int k = 0; k < labelsToShow; k++) {
-                    Label label = new Label(recursos.get(k));
-                    cellLayout.getChildren().add(label);
+                    Label resourceLabel = new Label(recursos[random.nextInt(recursos.length)]);
+                    cellLayout.getChildren().add(resourceLabel);
                 }
 
-                tableroDeJuego.add(cellLayout, i, j);
+                tableroDeJuego.add(cellLayout, j, i);
             }
         }
     }
 
     @FXML
-    protected void initialize() {
-        welcomeText.setText("Cargando el tablero de juego");
-            // Añadir los tipos de individuos al ComboBox
-        individuosComboBox.getItems().addAll("Basico", "Normal", "Avanzado");
-            // Opcional: Seleccionar el primer elemento por defecto
-        individuosComboBox.getSelectionModel().selectFirst();
+    private void onInsertarIndividuoClick() {
+        try {
+            int x = Integer.parseInt(posicionXTextField.getText());
+            int y = Integer.parseInt(posicionYTextField.getText());
+            String tipoIndividuo = individuosComboBox.getValue();
 
-
-        /*int n=this.tamañoAnchura;//tamañoAnchura; // Usar el valor de tamañoAnchura del slider
-        int m=this.tamañoAltura; // Usar el valor de tamañoAltura del slider
-        Random random = new Random();
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                VBox cellLayout = new VBox();
-                cellLayout.setAlignment(Pos.CENTER);
-                cellLayout.setMinSize(50, 50);
-                cellLayout.setStyle("-fx-border-color: black;");
-
-                List<String> recursos = new ArrayList<>(List.of("Agua", "Comida",  "Montaña", "Pozo","Biblioteca", "Tesoro"));
-                Collections.shuffle(recursos);
-                int labelsToShow = random.nextInt(4); // Entre 0 y 3 recursos por celda
-                for (int k = 0; k < labelsToShow; k++) {
-                    Label label = new Label(recursos.get(k));
-                    cellLayout.getChildren().add(label);
+            if (x >= 0 && x < tamañoAnchura && y >= 0 && y < tamañoAltura) {
+                VBox cell = (VBox) getNodeByRowColumnIndex(y, x, tableroDeJuego);
+                if (cell != null) {
+                    if (cell.getChildren().stream().filter(node -> node instanceof Text).count() < 3) {
+                        Text individuoText = new Text(tipoIndividuo);
+                        individuoText.setFill(Color.RED); // Color diferente para los individuos
+                        individuoText.setFont(Font.font("System", 12));
+                        cell.getChildren().add(individuoText);
+                    } else {
+                        showAlert("Error", "No se pueden agregar más de 3 individuos por casilla.");
+                    }
+                } else {
+                    showAlert("Error", "No se pudo encontrar la celda especificada.");
                 }
-
-                tableroDeJuego.add(cellLayout, i, j);
+            } else {
+                showAlert("Error", "Posición fuera de los límites del tablero.");
             }
-        }*/
+        } catch (NumberFormatException e) {
+            showAlert("Error", "Por favor, introduce valores válidos para las posiciones.");
+        }
     }
 
-}
+    private VBox getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        for (javafx.scene.Node node : gridPane.getChildren()) {
+            if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+                return (VBox) node;
+            }
+        }
+        return null;
+    }
 
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}
