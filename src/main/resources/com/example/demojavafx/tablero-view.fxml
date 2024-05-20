@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.TableroController">
+<VBox alignment="CENTER" prefHeight="352.0" prefWidth="273.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.TableroController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -21,11 +21,27 @@
                 <GridPane fx:id="tableroDeJuego" />
             </Tab>
             <Tab text="Insertar individuo">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <VBox>
+                                <children>
+                                    <Label text="Tipo de individuo" />
+                                    <ComboBox fx:id="individuosComboBox" prefWidth="200.0" />
+                                    <Label text="Posicion X" />
+                                    <TextField prefHeight="25.0" prefWidth="148.0" />
+                                    <Label text="Posicion Y" />
+                                    <TextField />
+
+                                </children>
+                            </VBox>
+                        </children>
+                    </AnchorPane>
+                </content>
                 <Label text="Tipo de individuo" />
-                <ComboBox fx:id="individuosComboBox" prefWidth="200.0" />
-                <Label text="Posicion en la que insertar"/>
             </Tab>
         </tabs>
     </TabPane>
+
 
 </VBox>
