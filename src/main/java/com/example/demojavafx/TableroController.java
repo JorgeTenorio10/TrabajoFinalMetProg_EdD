@@ -1,5 +1,7 @@
 package com.example.demojavafx;
 
+import Recursos.Individuo;
+import Recursos.Recursos;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -101,6 +103,43 @@ public class TableroController {
             }
         } catch (NumberFormatException e) {
             showAlert("Error", "Por favor, introduce valores válidos para las posiciones.");
+        }
+    }
+    protected void onSiguienteTurnoButton() {
+
+        ListaEnlazada listaIndividuos = new ListaEnlazada<Individuo>();
+        ListaEnlazada listaRecursos = new ListaEnlazada<Recursos>();
+        ListaEnlazada listaPosiciones = new ListaEnlazada<>();
+        for (int i = 0; i < listaIndividuos.getNumeroElementos(); i++) {
+//          listaIndividuos.getElemento(i).setTurnosDeVida(listaIndividuos.getElemento(i).getTurnosDeVida-1);
+//            if(listaIndividuos.getElemento(i).getTurnosDeVida<=0){
+//                listaIndividuos.getElemento(i)= null;
+//           }
+
+        }
+        for (int j = 0; j < listaRecursos.getNumeroElementos(); j++) {
+//            listaRecursos.getElemento(j).setTiempoDeAparicion(listaRecursos.getElemento(j).getTiempoDeAparicion-1);
+//            if(listaRecursos.getElemento(j).getTiempoDeAparicion<=0){
+//                listaRecursos.getElemento(j)=null;
+//            }
+        }
+        for (int k = 0; k < listaIndividuos.getNumeroElementos(); k++) {
+//            listaRecursos.getElemento(k).movimiento();
+        }
+        for (int p = 0; p < listaIndividuos.getNumeroElementos(); p++) {
+            for (int l = 0; l < listaRecursos.getNumeroElementos(); l++) {
+//                if(listaIndividuos.getElemento(p).getPosicion==listaRecursos.getElemento(l).getPosicion){
+//                    l.efecto(p);
+//                }
+            }
+        }
+        for (int u = 0; u < listaPosiciones.getNumeroElementos(); u++) {
+//            if(listaPosiciones.getNumeroIndividuos>=2){
+//                int numeroAleatorio =(int)(Math.random()*100);
+//                if (numeroAleatorio> Individuo.getProbabilidadReproduccion()){
+//                    insertarIndividuo(posicion);
+//                }
+//            }
         }
     }
 
