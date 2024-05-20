@@ -84,8 +84,8 @@ public class TableroController {
             int y = Integer.parseInt(posicionYTextField.getText());
             String tipoIndividuo = individuosComboBox.getValue();
 
-            if (x >= 0 && x < tamañoAnchura && y >= 0 && y < tamañoAltura) {
-                VBox cell = (VBox) getNodeByRowColumnIndex(y, x, tableroDeJuego);
+            if (x > 0 && x <= tamañoAnchura && y > 0 && y <= tamañoAltura) {
+                VBox cell = (VBox) getNodeByRowColumnIndex(y-1, x-1, tableroDeJuego);
                 if (cell != null) {
                     if (cell.getChildren().stream().filter(node -> node instanceof Text).count() < 3) {
                         Text individuoText = new Text(tipoIndividuo);
@@ -136,11 +136,28 @@ public class TableroController {
         for (int u = 0; u < listaPosiciones.getNumeroElementos(); u++) {
 //            if(listaPosiciones.getNumeroIndividuos>=2){
 //                int numeroAleatorio =(int)(Math.random()*100);
-//                if (numeroAleatorio> Individuo.getProbabilidadReproduccion()){
-//                    insertarIndividuo(posicion);
+//                if (numeroAleatorio< Individuo.getProbabilidadReproduccion()){
+//                    new Individuo, insertar(posicion)
 //                }
 //            }
         }
+        for (int b = 0; b < listaIndividuos.getNumeroElementos(); b++) {
+//            int numeroAleatorio=(int)(Math.random()*100);
+//            if(numeroAleatorio<Individuo.getProbabilidadClonacion()){
+//            Individuo.clonar();
+//          }
+        }
+        for (int i=0; i<listaPosiciones.getNumeroElementos(); i++){
+//            if(listaPosiciones.getNumeroIndividuos>=2){
+//            probDeMuerte de los individuos que haya en la casilla
+//            }
+        }
+//        for(int i=0; i< listaPosiciones.getNumeroElementos();i++){
+//            if(listaPosiciones.getNumeroDeRecursos<3){
+//                probabilidades de los sliders
+//            }
+//        }
+
     }
 
     private VBox getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
