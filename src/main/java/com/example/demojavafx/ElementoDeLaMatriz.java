@@ -7,18 +7,34 @@ public class ElementoDeLaMatriz {
     private Individuo Individuo1;
     private Individuo Individuo2;
     private Individuo Individuo3;
-    private Recursos Recurso1;
-    private Recursos Recurso2;
-    private Recursos Recurso3;
-    public ElementoDeLaMatriz(Individuo Individuo1,Individuo Individuo2, Individuo Individuo3,
-                              Recursos Recurso1, Recursos Recurso2, Recursos Recurso3){
+
+    public ElementoDeLaMatriz(Individuo Individuo1,Individuo Individuo2, Individuo Individuo3){
         this.Individuo1=Individuo1;
         this.Individuo2=Individuo2;
         this.Individuo3=Individuo3;
-        this.Recurso1=Recurso1;
-        this.Recurso2=Recurso2;
-        this.Recurso3=Recurso3;
     }
 
+    public Individuo getIndividuo2() {
+        return Individuo2;
+    }
 
+    public Individuo getIndividuo1() {
+        return Individuo1;
+    }
+
+    public Individuo getIndividuo3() {
+        return Individuo3;
+    }
+
+    public void setIndividuo3(Individuo individuo3) {
+        Individuo3 = individuo3;
+    }
+
+    public void setIndividuo2(Individuo individuo2) {
+        Individuo2 = individuo2;
+    }
+
+    public void setIndividuo1(Individuo individuo1) {
+        Individuo1 = individuo1;
+    }
 }

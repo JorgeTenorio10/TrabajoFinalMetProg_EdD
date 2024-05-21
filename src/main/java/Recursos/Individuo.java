@@ -10,7 +10,7 @@ public class Individuo {
     private int x;
     private int y;
 
-    public Individuo(int identificacionIndividuo,int generacionIndividuo,int turnosDeVida, float probabilidadReproduccion,float probabilidadClonacion,float probabilidadMuerte, int x, int y ){
+    public Individuo(int identificacionIndividuo,int generacionIndividuo,int turnosDeVida, float probabilidadReproduccion,float probabilidadClonacion,float probabilidadMuerte){
         this.IdentificacionIndividuo=identificacionIndividuo;
         this.GeneracionIndividuo=generacionIndividuo;
         this.TurnosDeVida=turnosDeVida;
