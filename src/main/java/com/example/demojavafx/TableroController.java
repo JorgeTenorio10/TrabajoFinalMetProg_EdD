@@ -1,7 +1,8 @@
 package com.example.demojavafx;
 
-import Recursos.Individuo;
 import Recursos.Recursos;
+import Recursos.Individuo;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -10,9 +11,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import Recursos.Comida;
+import Recursos.Agua;
+import Recursos.Pozo;
+import Recursos.Montaña;
+import Recursos.Biblioteca;
+import Recursos.Tesoro;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -31,9 +38,12 @@ public class TableroController {
 
     @FXML
     private TextField posicionXTextField;
+    private Random random = new Random();
 
     @FXML
     private TextField posicionYTextField;
+
+    private List<Recursos> recursos;
 
     @FXML
     private void initialize() {
@@ -42,6 +52,7 @@ public class TableroController {
         individuosComboBox.getItems().addAll("Básico", "Normal", "Avanzado");
         // Opcional: Seleccionar el primer elemento por defecto
         individuosComboBox.getSelectionModel().selectFirst();
+        recursos = new ArrayList<>();
     }
 
     public void setDimensions(int altura, int anchura) {
@@ -54,8 +65,8 @@ public class TableroController {
         tableroDeJuego.getRowConstraints().clear();
 
         int cellSize = 70; // Tamaño de cada celda
-        Random random = new Random();
 
+        // Inicializar el tablero con recursos aleatorios
         for (int i = 0; i < altura; i++) {
             for (int j = 0; j < anchura; j++) {
                 VBox cellLayout = new VBox();
@@ -64,17 +75,29 @@ public class TableroController {
                 cellLayout.setMaxSize(cellSize, cellSize);
                 cellLayout.setStyle("-fx-border-color: black;");
 
-                // Añadir recursos a la celda
-                String[] recursos = {"Agua", "Comida", "Montaña", "Pozo", "Biblioteca", "Tesoro"};
-                int labelsToShow = random.nextInt(4); // Entre 0 y 3 recursos por celda
-                for (int k = 0; k < labelsToShow; k++) {
-                    Label resourceLabel = new Label(recursos[random.nextInt(recursos.length)]);
-                    cellLayout.getChildren().add(resourceLabel);
+                // Generar recursos aleatorios
+                int recursosEnCelda = cellLayout.getChildren().size();
+                for (int k = 0; k < 3-recursosEnCelda; k++) {
+                    if (random.nextDouble() < 0.2) { // Probabilidad de 20%
+                        Label resourceLabel = new Label(obtenerTipoRecursoAleatorio());
+                        cellLayout.getChildren().add(resourceLabel);
+
+                        Recursos recurso = crearRecurso(resourceLabel.getText(), j, i);
+                        recurso.setTiempoAparicion(random.nextInt(10) + 1);
+                        recursos.add(recurso);
+                    }
                 }
 
                 tableroDeJuego.add(cellLayout, j, i);
             }
         }
+    }
+
+    // Método para obtener un tipo de recurso aleatorio
+    private String obtenerTipoRecursoAleatorio() {
+        String[] tiposRecursos = {"Agua", "Comida", "Montaña", "Pozo", "Biblioteca", "Tesoro"};
+        int index = random.nextInt(tiposRecursos.length);
+        return tiposRecursos[index];
     }
 
     @FXML
@@ -85,7 +108,7 @@ public class TableroController {
             String tipoIndividuo = individuosComboBox.getValue();
 
             if (x > 0 && x <= tamañoAnchura && y > 0 && y <= tamañoAltura) {
-                VBox cell = (VBox) getNodeByRowColumnIndex(y-1, x-1, tableroDeJuego);
+                VBox cell = (VBox) getNodeByRowColumnIndex(y - 1, x - 1, tableroDeJuego);
                 if (cell != null) {
                     if (cell.getChildren().stream().filter(node -> node instanceof Text).count() < 3) {
                         Text individuoText = new Text(tipoIndividuo);
@@ -105,7 +128,125 @@ public class TableroController {
             showAlert("Error", "Por favor, introduce valores válidos para las posiciones.");
         }
     }
-    protected void onSiguienteTurnoButton() {
+
+    @FXML
+    private void onSiguienteTurnoButton() {
+        pasarTurno();
+    }
+
+    private void pasarTurno() {
+        // Decrementar el tiempo de vida de cada recurso y eliminarlos si su tiempo se ha agotado
+        Iterator<Recursos> iterator = recursos.iterator();
+        while (iterator.hasNext()) {
+            Recursos recurso = iterator.next();
+            recurso.setTiempoAparicion(recurso.getTiempoAparicion() - 1);
+            if (recurso.getTiempoAparicion() <= 0) {
+                iterator.remove();
+                removerRecursoDeTablero(recurso);
+            }
+        }
+
+        // Generar nuevos recursos según sus probabilidades
+        generarNuevosRecursos();
+
+        // Imprimir el estado actual de los recursos para depuración
+        imprimirRecursos();
+    }
+
+    private void generarNuevosRecursos() {
+        double probabilidadAparicion = 0.1; // Probabilidad de que aparezca un nuevo recurso en una celda
+        double probAgua = 0.2;
+        double probComida = 0.2;
+        double probMontaña = 0.2;
+        double probPozo = 0.2;
+        double probBiblioteca = 0.1;
+        double probTesoro = 0.1;
+
+        for (int i = 0; i < tamañoAltura; i++) {
+            for (int j = 0; j < tamañoAnchura; j++) {
+                if (random.nextDouble() < probabilidadAparicion) {
+                    double r = random.nextDouble();
+                    String tipoRecurso;
+                    if (r < probAgua) tipoRecurso = "Agua";
+                    else if (r < probAgua + probComida) tipoRecurso = "Comida";
+                    else if (r < probAgua + probComida + probMontaña) tipoRecurso = "Montaña";
+                    else if (r < probAgua + probComida + probMontaña + probPozo) tipoRecurso = "Pozo";
+                    else if (r < probAgua + probComida + probMontaña + probPozo + probBiblioteca) tipoRecurso = "Biblioteca";
+                    else tipoRecurso = "Tesoro";
+
+                    Recursos nuevoRecurso = crearRecurso(tipoRecurso, j, i);
+                    recursos.add(nuevoRecurso);
+                    agregarRecursoAlTablero(nuevoRecurso);
+                }
+            }
+        }
+    }
+    private int generarTiempoAparicionAleatorio() {
+        return random.nextInt(10)+1; // Genera un número aleatorio entre 1 y 10
+    }
+
+    private Recursos crearRecurso(String tipoRecurso, int x, int y) {
+        int tiempoAparicion = generarTiempoAparicionAleatorio(); // Establecer el tiempo de vida del recurso
+        switch (tipoRecurso) {
+            case "Agua":
+                return new Agua(x, y, tiempoAparicion);
+            case "Comida":
+                return new Comida(x, y, tiempoAparicion);
+            case "Montaña":
+                return new Montaña(x, y, tiempoAparicion);
+            case "Pozo":
+                return new Pozo(x, y, tiempoAparicion);
+            case "Biblioteca":
+                return new Biblioteca(x, y, tiempoAparicion);
+            case "Tesoro":
+                return new Tesoro(x, y, tiempoAparicion);
+            default:
+                throw new IllegalArgumentException("Tipo de recurso desconocido: " + tipoRecurso);
+        }
+    }
+
+    private void agregarRecursoAlTablero(Recursos recurso) {
+        VBox cell = (VBox) getNodeByRowColumnIndex(recurso.getY(), recurso.getX(), tableroDeJuego);
+        if (cell != null) {
+            Label resourceLabel = new Label(recurso.getClass().getSimpleName());
+            cell.getChildren().add(resourceLabel);
+        }
+    }
+
+    private void removerRecursoDeTablero(Recursos recurso) {
+        VBox cell = (VBox) getNodeByRowColumnIndex(recurso.getY(), recurso.getX(), tableroDeJuego);
+        if (cell != null) {
+            cell.getChildren().removeIf(node -> node instanceof Label && ((Label) node).getText().equals(recurso.getClass().getSimpleName()));
+        }
+    }
+
+    private void imprimirRecursos() {
+        System.out.println("Recursos actuales:");
+        for (Recursos recurso : recursos) {
+            System.out.println("Tipo: " + recurso.getClass().getSimpleName() +
+                    ", Posición: (" + recurso.getX() + ", " + recurso.getY() + ")" +
+                    ", Tiempo de vida restante: " + recurso.getTiempoAparicion());
+        }
+    }
+
+    private VBox getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+        for (javafx.scene.Node node : gridPane.getChildren()) {
+            if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+                return (VBox) node;
+            }
+        }
+        return null;
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    protected void onNextTurn() {
 
         ListaEnlazada listaIndividuos = new ListaEnlazada<Individuo>();
         ListaEnlazada listaRecursos = new ListaEnlazada<Recursos>();
@@ -158,22 +299,5 @@ public class TableroController {
 //            }
 //        }
 
-    }
-
-    private VBox getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
-        for (javafx.scene.Node node : gridPane.getChildren()) {
-            if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
-                return (VBox) node;
-            }
-        }
-        return null;
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

@@ -12,6 +12,10 @@ public abstract class Recursos {
     public void setTiempoAparicion(int tiempoAparicion) {
         this.tiempoAparicion = tiempoAparicion;
     }
+    public void reducirTiempoAparicion() {
+        this.tiempoAparicion--;
+    }
+
 
     public int getY() {
         return y;

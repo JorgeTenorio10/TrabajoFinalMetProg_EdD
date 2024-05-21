@@ -1,7 +1,6 @@
 package com.example.demojavafx;
 
 import Recursos.Recursos;
-import Recursos.Individuo;
 
 public class MatrizDePosicionesRecurso {
     private ElementoDeLaMatrizRecurso[][] ElementoDeLaMatrizRecurso;

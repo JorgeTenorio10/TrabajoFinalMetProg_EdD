@@ -22,6 +22,7 @@
                                 </Label>
                                 <Label fx:id="welcomeText" />
                                 <GridPane fx:id="tableroDeJuego" />
+                                <Button text="Pasar Turno" onAction="#onSiguienteTurnoButton" />
                             </children>
                         </VBox>
                     </children>

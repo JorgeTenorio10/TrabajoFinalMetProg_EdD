@@ -3,6 +3,11 @@ package Recursos;
 import Recursos.Recursos;
 
 public class Tesoro extends Recursos {
+    public Tesoro(int x, int y, int tiempoAparicion) {
+        setX(x);
+        setY(y);
+        setTiempoAparicion(tiempoAparicion);
+    }
     private int AumentoProbabilidad;
 
     public int getAumentoProbabilidad() {
