@@ -247,52 +247,82 @@ public class TableroController {
     }
 
     protected void onNextTurn() {
+        MatrizDePosiciones MatrizIndividuos= new MatrizDePosiciones(this.tamañoAltura,this.tamañoAnchura);
+        MatrizDePosicionesRecurso MatrizRecursos= new MatrizDePosicionesRecurso(this.tamañoAltura,this.tamañoAnchura);
+        ElementoDeLaMatriz[][] listaIndividuos= MatrizIndividuos.getElementoDeLaMatriz();
+        ElementoDeLaMatrizRecurso[][] listaRecursos = MatrizRecursos.getElementoDeLaMatrizRecurso();
 
-        ListaEnlazada listaIndividuos = new ListaEnlazada<Individuo>();
-        ListaEnlazada listaRecursos = new ListaEnlazada<Recursos>();
-        ListaEnlazada listaPosiciones = new ListaEnlazada<>();
-        for (int i = 0; i < listaIndividuos.getNumeroElementos(); i++) {
-//          listaIndividuos.getElemento(i).setTurnosDeVida(listaIndividuos.getElemento(i).getTurnosDeVida-1);
-//            if(listaIndividuos.getElemento(i).getTurnosDeVida<=0){
-//                listaIndividuos.getElemento(i)= null;
-//           }
+        for (int i = 0; i < MatrizIndividuos.getAltura(); i++) {
+            for(int j=0; j<MatrizIndividuos.getAnchura(); j++){
+                if(listaIndividuos[i][j].getIndividuo3()!=null) {
+                    listaIndividuos[i][j].getIndividuo3().setTurnosDeVida(Individuo.getTurnosDeVida() - 1);
+                    if (listaIndividuos[i][j].getIndividuo3().getTurnosDeVida() <= 0) {
+                        listaIndividuos[i][j].setIndividuo3(null);
+                    }
+                }
 
+                 if(listaIndividuos[i][j].getIndividuo2()!=null){
+                    listaIndividuos[i][j].getIndividuo2().setTurnosDeVida(Individuo.getTurnosDeVida()-1);
+                    if (listaIndividuos[i][j].getIndividuo2().getTurnosDeVida()<=0){
+                        listaIndividuos[i][j].setIndividuo2(null);
+                        if(listaIndividuos[i][j].getIndividuo3()!=null){
+                            listaIndividuos[i][j].setIndividuo2(listaIndividuos[i][j].getIndividuo3());
+                            listaIndividuos[i][j].setIndividuo3(null);
+                        }
+                    }
+                }
+                 if(listaIndividuos[i][j].getIndividuo1()!=null){
+                    listaIndividuos[i][j].getIndividuo1().
+                            setTurnosDeVida(listaIndividuos[i][j].getIndividuo1().getTurnosDeVida()-1);
+                    if (listaIndividuos[i][j].getIndividuo1().getTurnosDeVida()<=0){
+                        listaIndividuos[i][j].setIndividuo1(null);
+                        if(listaIndividuos[i][j].getIndividuo2()!=null){
+                            listaIndividuos[i][j].setIndividuo1(listaIndividuos[i][j].getIndividuo2());
+                            listaIndividuos[i][j].setIndividuo2(null);
+                            if(listaIndividuos[i][j].getIndividuo3()!=null){
+                                listaIndividuos[i][j].setIndividuo2(listaIndividuos[i][j].getIndividuo3());
+                            }
+                        }
+                    }
+                }
+            }
         }
-        for (int j = 0; j < listaRecursos.getNumeroElementos(); j++) {
-//            listaRecursos.getElemento(j).setTiempoDeAparicion(listaRecursos.getElemento(j).getTiempoDeAparicion-1);
-//            if(listaRecursos.getElemento(j).getTiempoDeAparicion<=0){
-//                listaRecursos.getElemento(j)=null;
-//            }
+        for (int i = 0; i <MatrizRecursos.getAltura(); i++) {
+            for(int j=0; j<MatrizRecursos.getAnchura(); j++){
+                if(MatrizRecursos.getRecurso3(i,j)!=null){
+
+                }
+            }
         }
-        for (int k = 0; k < listaIndividuos.getNumeroElementos(); k++) {
+//        for (int k = 0; k < listaIndividuos.getNumeroElementos(); k++) {
 //            listaRecursos.getElemento(k).movimiento();
-        }
-        for (int p = 0; p < listaIndividuos.getNumeroElementos(); p++) {
-            for (int l = 0; l < listaRecursos.getNumeroElementos(); l++) {
+//        }
+//        for (int p = 0; p < listaIndividuos.getNumeroElementos(); p++) {
+//            for (int l = 0; l < listaRecursos.getNumeroElementos(); l++) {
 //                if(listaIndividuos.getElemento(p).getPosicion==listaRecursos.getElemento(l).getPosicion){
 //                    l.efecto(p);
 //                }
-            }
-        }
-        for (int u = 0; u < listaPosiciones.getNumeroElementos(); u++) {
+//            }
+//        }
+//        for (int u = 0; u < listaPosiciones.getNumeroElementos(); u++) {
 //            if(listaPosiciones.getNumeroIndividuos>=2){
 //                int numeroAleatorio =(int)(Math.random()*100);
 //                if (numeroAleatorio< Individuo.getProbabilidadReproduccion()){
 //                    new Individuo, insertar(posicion)
 //                }
 //            }
-        }
-        for (int b = 0; b < listaIndividuos.getNumeroElementos(); b++) {
+//        }
+//        for (int b = 0; b < listaIndividuos.getNumeroElementos(); b++) {
 //            int numeroAleatorio=(int)(Math.random()*100);
 //            if(numeroAleatorio<Individuo.getProbabilidadClonacion()){
 //            Individuo.clonar();
 //          }
-        }
-        for (int i=0; i<listaPosiciones.getNumeroElementos(); i++){
+//        }
+//        for (int i=0; i<listaPosiciones.getNumeroElementos(); i++){
 //            if(listaPosiciones.getNumeroIndividuos>=2){
 //            probDeMuerte de los individuos que haya en la casilla
 //            }
-        }
+//        }
 //        for(int i=0; i< listaPosiciones.getNumeroElementos();i++){
 //            if(listaPosiciones.getNumeroDeRecursos<3){
 //                probabilidades de los sliders

@@ -1,5 +1,5 @@
 package Recursos;
-
+import com.example.demojavafx.TableroController;
 public class Individuo {
     private static int IdentificacionIndividuo;
     private static int GeneracionIndividuo;
@@ -9,8 +9,11 @@ public class Individuo {
     private static float ProbabilidadMuerte;
     private int x;
     private int y;
+    private String tipo;
 
-    public Individuo(int identificacionIndividuo,int generacionIndividuo,int turnosDeVida, float probabilidadReproduccion,float probabilidadClonacion,float probabilidadMuerte){
+    public Individuo(int identificacionIndividuo,int generacionIndividuo,int turnosDeVida,
+                     float probabilidadReproduccion,float probabilidadClonacion,
+                     float probabilidadMuerte,int x,int y, String tipo){
         this.IdentificacionIndividuo=identificacionIndividuo;
         this.GeneracionIndividuo=generacionIndividuo;
         this.TurnosDeVida=turnosDeVida;
@@ -19,6 +22,7 @@ public class Individuo {
         this.ProbabilidadMuerte=probabilidadMuerte;
         this.x=x;
         this.y=y;
+        this.tipo=tipo;
     }
 
     public static int getIdentificacionIndividuo() {
@@ -29,7 +33,7 @@ public class Individuo {
         return GeneracionIndividuo;
     }
 
-    public static int getTurnosDeVida() {
+    public  static int getTurnosDeVida() {
         return TurnosDeVida;
     }
 
@@ -94,5 +98,21 @@ public class Individuo {
         posicion[0]=getX();
         posicion[1]=getY();
     }
+
+
+    //public void movimiento(){
+      //  if(this.tipo=="Basico"){
+        //    int numeroAleatorio1 =(int)(Math.random()*);
+          //  int numeroAleatorio2;
+           // this.setX(Math.random(int x));
+        //}
+       // else if(this.tipo=="Normal"){
+
+        //}
+       // else if (this.tipo == "Avanzado"){
+
+       // }
+
+    //}
 
 }

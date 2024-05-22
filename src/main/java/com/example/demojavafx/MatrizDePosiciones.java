@@ -7,6 +7,8 @@ public class MatrizDePosiciones {
 
     private ElementoDeLaMatriz[][] elementoDeLaMatriz;
     private Recursos[][] recursos;
+    private int altura;
+    private int anchura;
 
     public  MatrizDePosiciones(int altura, int anchura){//Al crear la matriz que enlace
         // todo tendremos que poner el valor de los sliders en n y m
@@ -17,7 +19,14 @@ public class MatrizDePosiciones {
             }
         }
         this.elementoDeLaMatriz= el1;
+        this.altura=altura;
+        this.anchura=anchura;
     }
+
+    public ElementoDeLaMatriz[][] getElementoDeLaMatriz() {
+        return this.elementoDeLaMatriz;
+    }
+
     public ElementoDeLaMatriz getElemento(int x, int y){
         return this.elementoDeLaMatriz[x][y];
     }
@@ -50,6 +59,18 @@ public class MatrizDePosiciones {
         else {
             System.out.println("No se ha podido añadir el recurso");
         }
+    }
+
+    public int getAltura() {
+        return altura;
+    }
+
+    public int getAnchura() {
+        return anchura;
+    }
+
+    public int getTamaño(){
+        return this.altura*this.anchura;
     }
 
 
