@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.ParameterController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: D2FFB1; -fx-border-color: black;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.ParameterController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <Label text="Seleccione los parametros de la partida" textAlignment="CENTER" textFill="RED">
+   <Label text="Seleccione los parametros de la partida" textAlignment="CENTER">
       <font>
          <Font name="System Bold" size="18.0" />
       </font>
@@ -35,9 +35,9 @@
                      <children>
                          <VBox>
                              <children>
-                                 <Label text="Altura"/>
-                                 <Slider fx:id="sliderTamañoAltura" blockIncrement="1.0"  majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="1.0" />
-                                 <Label text="Anchura"/>
+                                 <Label text="Altura" />
+                                 <Slider fx:id="sliderTamañoAltura" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="1.0" />
+                                 <Label text="Anchura" />
                                  <Slider fx:id="sliderTamañoAnchura" blockIncrement="1.0" layoutX="63.0" layoutY="507.0" majorTickUnit="1.0" max="20.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="1.0" />
                              </children>
                          </VBox>
@@ -50,7 +50,7 @@
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                          <Label layoutX="43.0" layoutY="27.0" text="Reproduccion Individuos" />
-                         <Slider fx:id="sliderProbabilidadReproduccion" layoutX="43.0" layoutY="52" showTickLabels="true" showTickMarks="true"  />
+                         <Slider fx:id="sliderProbabilidadReproduccion" layoutX="43.0" layoutY="52" showTickLabels="true" showTickMarks="true" />
                          <Label layoutX="49.0" layoutY="87.0" text="Aparicion de objetos" />
                          <Slider fx:id="sliderProbabilidadAparicionObjetos" layoutX="43.0" layoutY="112.0" showTickLabels="true" showTickMarks="true" />
                          <Label layoutX="220.0" layoutY="27.0" text="Aumento probabilidad Recursos.Tesoro" />
@@ -85,7 +85,7 @@
    </TabPane>
    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" style="-fx-border-width: 3px;">
       <children>
-          <Button mnemonicParsing="false" onAction="#onAbrirTableroClick" text="Iniciar la partida"/>
+          <Button mnemonicParsing="false" onAction="#onAbrirTableroClick" text="Iniciar la partida" />
           <Button onAction="#onBotonGuardarClick" text="Guardar">
             <opaqueInsets>
                <Insets />

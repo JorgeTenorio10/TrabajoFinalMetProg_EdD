@@ -5,18 +5,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.HelloController" >
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: D2FFB1; -fx-border-color: black;" styleClass="blue" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.HelloController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <Label text="Juego de la vida de CONWAY" textAlignment="CENTER" textFill="RED">
+   <Label text="Juego de la vida de CONWAY" textAlignment="CENTER">
       <font>
-         <Font name="System Bold" size="18.0" />
+         <Font name="Cambria Bold" size="18.0" />
       </font>
    </Label>
     <Label fx:id="welcomeText" />
-   <Button mnemonicParsing="false" onAction="#onMiBotonNuevaVentanaParametrosClick" text="Iniciar partida" textFill="#3a37ed" />
-   <Button mnemonicParsing="false" onAction="#onMiBotonCargarPartida" text="Cargar Partida" textFill="#0022ff" />
+   <Button mnemonicParsing="false" onAction="#onMiBotonNuevaVentanaParametrosClick" style="-fx-background-color: EDFFB1; -fx-border-color: black;" text="Iniciar partida" textFill="#3a37ed" />
+   <Button mnemonicParsing="false" onAction="#onMiBotonCargarPartida" style="-fx-background-color: EDFFB1; -fx-border-color: black;" text="Cargar Partida" textFill="#0022ff" />
 
 </VBox>

@@ -6,7 +6,6 @@ import Recursos.Individuo;
 public class MatrizDePosiciones {
 
     private ElementoDeLaMatriz[][] elementoDeLaMatriz;
-    private Recursos[][] recursos;
     private int altura;
     private int anchura;
 

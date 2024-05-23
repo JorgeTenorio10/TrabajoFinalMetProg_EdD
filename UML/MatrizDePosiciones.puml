@@ -1,0 +1,77 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+Individuo <-- basico
+Individuo <-- Normal
+Individuo <-- Avanzado
+class Individuo {
+    -IdentificacionInd:int
+    -GeneracionInd:int
+    -TurnosDeVida:int
+    -ProbReproduccion:float
+    -ProbClonacion:float
+    -ProbMuerte:float
+    -x:int
+    -y:int
+    +Individuo(IdentificacionInd,GeneracionInd,TurnosDeVida,
+      ProbReproduccion,ProbClonacion,ProbMuerte,x,y)
+    +getIdentificacionInd():int
+    +getGeneracionInd():int
+    +getTurnosDeVida():int
+    +getProbReproduccion():float
+    +getProbClonacion():float
+    +getProbMuerte():float
+    +setIdentificacionInd(int IdentificacionInd):void
+    +setGeneracionInd(int GeneracionInd):void
+    +setTurnosDeVida(int TurnosDeVida):void
+    +setProbReproduccion(float ProbReproduccion):void
+    +setProbClonacion(float ProbClonacion):void
+    +setProbMuerte(float ProbMuerte):void
+    +getX():int
+    +getY():int
+    +setX(int x):void
+    +setY(int y):void
+    +getPosicion():int[2]
+    +setPosicion():void
+}
+class basico
+class Normal
+class Avanzado
+
+class Individuo
+
+class ElementoDeLaMatriz {
+    - Individuo Individuo1
+    - Individuo Individuo2
+    - Individuo Individuo3
+
+    + ElementoDeLaMatriz(Individuo Individuo1, Individuo Individuo2, Individuo Individuo3)
+    + Individuo getIndividuo1()
+    + Individuo getIndividuo2()
+    + Individuo getIndividuo3()
+    + void setIndividuo1(Individuo individuo1)
+    + void setIndividuo2(Individuo individuo2)
+    + void setIndividuo3(Individuo individuo3)
+}
+
+
+class MatrizDePosiciones {
+    - ElementoDeLaMatriz[][] elementoDeLaMatriz
+    - int altura
+    - int anchura
+
+    + MatrizDePosiciones(int altura, int anchura)
+    + ElementoDeLaMatriz[][] getElementoDeLaMatriz()
+    + ElementoDeLaMatriz getElemento(int x, int y)
+    + Individuo getIndividuo1(int x, int y)
+    + Individuo getIndividuo2(int x, int y)
+    + Individuo getIndividuo3(int x, int y)
+    + void setIndividuo(int x, int y, Individuo individuo)
+    + int getAltura()
+    + int getAnchura()
+    + int getTamaño()
+}
+
+ElementoDeLaMatriz *-- Individuo
+MatrizDePosiciones *-- ElementoDeLaMatriz
+
+@enduml

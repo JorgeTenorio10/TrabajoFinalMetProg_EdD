@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.TableroController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: D2FFB1;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.TableroController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -22,7 +23,7 @@
                                 </Label>
                                 <Label fx:id="welcomeText" />
                                 <GridPane fx:id="tableroDeJuego" />
-                                <Button text="Pasar Turno" onAction="#onSiguienteTurnoButton" />
+                                <Button onAction="#onSiguienteTurnoButton" text="Pasar Turno" />
                             </children>
                         </VBox>
                     </children>
@@ -40,7 +41,7 @@
                                     <TextField fx:id="posicionXTextField" prefHeight="25.0" prefWidth="148.0" />
                                     <Label text="Posición Y" />
                                     <TextField fx:id="posicionYTextField" prefHeight="25.0" prefWidth="148.0" />
-                                    <Button text="Insertar Individuo" onAction="#onInsertarIndividuoClick" />
+                                    <Button onAction="#onInsertarIndividuoClick" text="Insertar Individuo" />
                                 </children>
                             </VBox>
                         </children>

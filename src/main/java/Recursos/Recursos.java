@@ -4,6 +4,11 @@ public abstract class Recursos {
     private int x;
     private int y;
     private int tiempoAparicion;
+    public Recursos(){
+        this.x=x;
+        this.y=y;
+        this.tiempoAparicion=tiempoAparicion;
+    }
 
     public int getTiempoAparicion() {
         return tiempoAparicion;

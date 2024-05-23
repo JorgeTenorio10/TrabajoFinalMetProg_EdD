@@ -1,0 +1,70 @@
+@startuml
+
+abstract class Recursos {
+    - int x
+    - int y
+    - int tiempoAparicion
+
+    + int getTiempoAparicion()
+    + void setTiempoAparicion(int tiempoAparicion)
+    + void reducirTiempoAparicion()
+    + int getX()
+    + int getY()
+    + void setX(int x)
+    + void setY(int y)
+    + int[] getPosicion()
+    + void setPosicion()
+    + abstract void efecto()
+}
+
+class Agua {
+    + Agua(int x, int y, int tiempoAparicion)
+    + void efecto()
+}
+class Comida {
+    +Comida(int x, int y, int tiempoAparicion)
+    +void efecto()
+}
+class Biblioteca {
+    +Biblioteca(int x, int y, int tiempoAparicion)
+    +void efecto()
+}
+class Pozo {
+    +Pozo(int x, int y, int tiempoAparicion)
+    +void efecto()
+}
+class Tesoro {
+    +Tesoro(int x, int y, int tiempoAparicion)
+    +void efecto()
+}
+class Montaña {
+    +Montaña(int x, int y, int tiempoAparicion)
+    +void efecto()
+}
+
+Recursos <|-- Agua
+Recursos <|-- Comida
+Recursos <|-- Biblioteca
+Recursos <|-- Tesoro
+Recursos <|-- Montaña
+Recursos <|-- Pozo
+note right of Agua::efecto
+  implements abstract method
+end note
+note right of Comida::efecto
+  implements abstract method
+end note
+note right of Biblioteca::efecto
+  implements abstract method
+end note
+note right of Tesoro::efecto
+  implements abstract method
+end note
+note right of Montaña::efecto
+  implements abstract method
+end note
+note right of Pozo::efecto
+  implements abstract method
+end note
+
+@enduml

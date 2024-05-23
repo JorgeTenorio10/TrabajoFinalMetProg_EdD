@@ -1,0 +1,55 @@
+@startuml
+
+abstract class Recursos {
+    - int x
+    - int y
+    - int tiempoAparicion
+
+    + int getTiempoAparicion()
+    + void setTiempoAparicion(int tiempoAparicion)
+    + void reducirTiempoAparicion()
+    + int getX()
+    + int getY()
+    + void setX(int x)
+    + void setY(int y)
+    + int[] getPosicion()
+    + void setPosicion()
+    + abstract void efecto()
+}
+
+class ElementoDeLaMatrizRecurso {
+    - Recursos recurso1
+    - Recursos recurso2
+    - Recursos recurso3
+
+    + ElementoDeLaMatrizRecurso(Recursos recurso1, Recursos recurso2, Recursos recurso3)
+    + Recursos getRecurso1()
+    + Recursos getRecurso2()
+    + Recursos getRecurso3()
+    + void setRecurso1(Recursos recurso1)
+    + void setRecurso2(Recursos recurso2)
+    + void setRecurso3(Recursos recurso3)
+    + void reducirTiemposDeAparicion()
+    + void eliminarRecursosCaducados()
+}
+
+class MatrizDePosicionesRecurso {
+    - ElementoDeLaMatrizRecurso[][] ElementoDeLaMatrizRecurso
+    - int altura
+    - int anchura
+
+    + MatrizDePosicionesRecurso(int altura, int anchura)
+    + ElementoDeLaMatrizRecurso[][] getElementoDeLaMatrizRecurso()
+    + ElementoDeLaMatrizRecurso getElemento(int x, int y)
+    + Recursos getRecurso1(int x, int y)
+    + Recursos getRecurso2(int x, int y)
+    + Recursos getRecurso3(int x, int y)
+    + void setRecurso(int x, int y, Recursos recursos)
+    + int getAltura()
+    + int getAnchura()
+}
+
+ElementoDeLaMatrizRecurso *-- Recursos
+MatrizDePosicionesRecurso *-- ElementoDeLaMatrizRecurso
+
+@enduml

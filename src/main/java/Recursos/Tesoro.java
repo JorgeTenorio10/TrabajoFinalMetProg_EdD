@@ -4,6 +4,7 @@ import Recursos.Recursos;
 
 public class Tesoro extends Recursos {
     public Tesoro(int x, int y, int tiempoAparicion) {
+        super();
         setX(x);
         setY(y);
         setTiempoAparicion(tiempoAparicion);
