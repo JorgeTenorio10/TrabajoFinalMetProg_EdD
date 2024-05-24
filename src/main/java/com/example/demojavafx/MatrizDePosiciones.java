@@ -14,7 +14,9 @@ public class MatrizDePosiciones {
         ElementoDeLaMatriz el1[][]=new ElementoDeLaMatriz[altura][anchura];
         for(int h=0;h<altura;h++){
             for(int i=0; i<anchura; i++){
-                el1[h][i]=null;
+                el1[h][i].setIndividuo3(null);
+                el1[h][i].setIndividuo2(null);
+                el1[h][i].setIndividuo1(null);
             }
         }
         this.elementoDeLaMatriz= el1;

@@ -98,6 +98,22 @@ public class Individuo {
         posicion[0]=getX();
         posicion[1]=getY();
     }
+    @Override
+    public String toString() {
+        return "Individuo{" +
+                "identificacion="+ IdentificacionIndividuo+
+                ",generacion=" + GeneracionIndividuo+
+                ",turnos de vida= "+ TurnosDeVida+
+                ",probabilidad de reproduccion="+ ProbabilidadReproduccion+
+                ",probabilidad de clonacion="+ProbabilidadClonacion+
+                ",probabilidad de muerte="+ ProbabilidadMuerte+
+                ",x=" + x +
+                ", y=" + y +
+                ", tipo='" + tipo + '\'' +
+                '}';
+    }
+
+
 
 
     //public void movimiento(){

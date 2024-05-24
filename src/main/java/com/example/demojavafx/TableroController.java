@@ -26,10 +26,19 @@ import java.util.Random;
 public class TableroController {
     private int tamañoAltura;
     private int tamañoAnchura;
+    private int turno;
+    private int n_individuos;
 
     @FXML
     private ComboBox<String> individuosComboBox;
-
+    @FXML
+    private Slider turnosDeVida;
+    @FXML
+    private Slider probReproduccion;
+    @FXML
+    private Slider probClonacion;
+    MatrizDePosiciones MatrizIndividuos= new MatrizDePosiciones(tamañoAltura,tamañoAnchura);
+    ElementoDeLaMatriz[][] listaIndividuos= MatrizIndividuos.getElementoDeLaMatriz();
     @FXML
     private Label welcomeText;
 
@@ -42,6 +51,8 @@ public class TableroController {
 
     @FXML
     private TextField posicionYTextField;
+
+    private ListaEnlazada<Individuo> listaEnlazada=new ListaEnlazada<>();
 
     private List<Recursos> recursos;
 
@@ -106,15 +117,23 @@ public class TableroController {
             int x = Integer.parseInt(posicionXTextField.getText());
             int y = Integer.parseInt(posicionYTextField.getText());
             String tipoIndividuo = individuosComboBox.getValue();
-
+            int turnosVida=(int)turnosDeVida.getValue();
+            int probabilidadReproduccion=(int)probReproduccion.getValue();
+            int probabilidadClonacion= (int)probClonacion.getValue();
             if (x > 0 && x <= tamañoAnchura && y > 0 && y <= tamañoAltura) {
                 VBox cell = (VBox) getNodeByRowColumnIndex(y - 1, x - 1, tableroDeJuego);
                 if (cell != null) {
                     if (cell.getChildren().stream().filter(node -> node instanceof Text).count() < 3) {
                         Text individuoText = new Text(tipoIndividuo);
+                        n_individuos=n_individuos+1;
                         individuoText.setFill(Color.RED); // Color diferente para los individuos
                         individuoText.setFont(Font.font("System", 12));
                         cell.getChildren().add(individuoText);
+                        Individuo i1= new Individuo(n_individuos,turno,turnosVida,probabilidadReproduccion, probabilidadClonacion, 100 - probabilidadReproduccion,x,y,tipoIndividuo);
+                        ElementoLE<Individuo> ind= new ElementoLE<>(i1);
+                        listaEnlazada.add(i1);
+                        String contenidoLista=listaEnlazada.toString();
+                        System.out.println(contenidoLista);
                     } else {
                         showAlert("Error", "No se pueden agregar más de 3 individuos por casilla.");
                     }

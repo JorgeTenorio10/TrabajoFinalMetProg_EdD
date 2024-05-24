@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: D2FFB1;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.TableroController">
+<VBox alignment="CENTER" prefHeight="343.0" prefWidth="589.0" spacing="20.0" style="-fx-background-color: D2FFB1;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demojavafx.TableroController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -31,7 +31,7 @@
             </Tab>
             <Tab text="Insertar individuo">
                 <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="549.0">
                         <children>
                             <VBox alignment="CENTER" spacing="10.0">
                                 <children>
@@ -44,6 +44,12 @@
                                     <Button onAction="#onInsertarIndividuoClick" text="Insertar Individuo" />
                                 </children>
                             </VBox>
+                     <Label layoutX="236.0" layoutY="5.0" text="Turnos de vida" />
+                     <Label layoutX="368.0" layoutY="5.0" text="Probabilidad de Reproduccion" />
+                     <Slider fx:id="turnosDeVida" blockIncrement="1.0" layoutX="216.0" layoutY="31.0" majorTickUnit="1.0" max="10.0" min="1.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+                     <Slider fx:id="probReproduccion" blockIncrement="1.0" layoutX="378.0" layoutY="31.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" value="1.0" />
+                     <Slider fx:id="probClonacion" layoutX="286.0" layoutY="107.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" />
+                     <Label layoutX="287.0" layoutY="81.0" text="Probabilidad de clonacion" />
                         </children>
                     </AnchorPane>
                 </content>
