@@ -1,7 +1,6 @@
 package com.example.demojavafx;
 
 import Recursos.Individuo;
-import Recursos.Recursos;
 
 public class ElementoDeLaMatriz {
     private Individuo Individuo1;

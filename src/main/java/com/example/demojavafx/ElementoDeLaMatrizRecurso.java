@@ -1,7 +1,7 @@
 package com.example.demojavafx;
 
-import Recursos.Recursos;
 
+import Recursos.Recursos;
 
 public class ElementoDeLaMatrizRecurso {
     private Recursos recurso1;

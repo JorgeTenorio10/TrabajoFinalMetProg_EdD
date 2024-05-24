@@ -2,7 +2,6 @@ package com.example.demojavafx;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
-import Recursos.Recursos;
 
 class MatrizDePosicionesRecursoTest {
 

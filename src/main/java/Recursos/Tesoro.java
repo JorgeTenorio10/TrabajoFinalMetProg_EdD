@@ -19,8 +19,4 @@ public class Tesoro extends Recursos {
         AumentoProbabilidad = aumentoProbabilidad;
     }
 
-    @Override
-    public void efecto() {
-        Individuo.setProbabilidadReproduccion(Individuo.getProbabilidadReproduccion()+ Individuo.getProbabilidadReproduccion()*getAumentoProbabilidad());
-    }
 }

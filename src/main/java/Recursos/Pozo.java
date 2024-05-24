@@ -8,8 +8,4 @@ public class Pozo extends Recursos {
         setY(y);
         setTiempoAparicion(tiempoAparicion);
     }
-    @Override
-    public void efecto() {
-
-    }
 }

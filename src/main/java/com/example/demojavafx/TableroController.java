@@ -1,22 +1,18 @@
+
 package com.example.demojavafx;
 
-import Recursos.Recursos;
 import Recursos.Individuo;
 
+import Recursos.*;
+import Recursos.Recursos;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+        import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import Recursos.Comida;
-import Recursos.Agua;
-import Recursos.Pozo;
-import Recursos.Montaña;
-import Recursos.Biblioteca;
-import Recursos.Tesoro;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,7 +22,7 @@ import java.util.Random;
 public class TableroController {
     private int tamañoAltura;
     private int tamañoAnchura;
-    private int turno;
+    private int turno = 1;
     private int n_individuos;
 
     @FXML
@@ -37,8 +33,8 @@ public class TableroController {
     private Slider probReproduccion;
     @FXML
     private Slider probClonacion;
-    MatrizDePosiciones MatrizIndividuos= new MatrizDePosiciones(tamañoAltura,tamañoAnchura);
-    ElementoDeLaMatriz[][] listaIndividuos= MatrizIndividuos.getElementoDeLaMatriz();
+    MatrizDePosiciones MatrizIndividuos = new MatrizDePosiciones(tamañoAltura, tamañoAnchura);
+    ElementoDeLaMatriz[][] listaIndividuos = MatrizIndividuos.getElementoDeLaMatriz();
     @FXML
     private Label welcomeText;
 
@@ -51,9 +47,8 @@ public class TableroController {
 
     @FXML
     private TextField posicionYTextField;
-    private ArrayList<Individuo> listaIndividuosArray = new ArrayList<>();
 
-    private ListaEnlazada<Individuo> listaEnlazada=new ListaEnlazada<>();
+    private ListaEnlazada<Individuo> listaEnlazada = new ListaEnlazada<>();
 
     private List<Recursos> recursos;
 
@@ -89,7 +84,7 @@ public class TableroController {
 
                 // Generar recursos aleatorios
                 int recursosEnCelda = cellLayout.getChildren().size();
-                for (int k = 0; k < 3-recursosEnCelda; k++) {
+                for (int k = 0; k < 3 - recursosEnCelda; k++) {
                     if (random.nextDouble() < 0.2) { // Probabilidad de 20%
                         Label resourceLabel = new Label(obtenerTipoRecursoAleatorio());
                         cellLayout.getChildren().add(resourceLabel);
@@ -111,18 +106,6 @@ public class TableroController {
         int index = random.nextInt(tiposRecursos.length);
         return tiposRecursos[index];
     }
-    private void agregarIndividuoAlTablero(Individuo individuo) {
-        int x = individuo.getX();
-        int y = individuo.getY();
-        int id = individuo.getIdentificacionIndividuo();
-        VBox cellLayout = (VBox) getNodeByRowColumnIndex(y - 1, x - 1, tableroDeJuego);
-        if (cellLayout != null) {
-            Text individuoText = new Text( " (" + individuo.getTurnosDeVida() + ")");
-            individuoText.setFill(Color.RED); // Color diferente para los individuos
-            individuoText.setFont(Font.font("System", 12));
-            cellLayout.getChildren().add(individuoText);
-        }
-    }
 
     @FXML
     private void onInsertarIndividuoClick() {
@@ -130,31 +113,28 @@ public class TableroController {
             int x = Integer.parseInt(posicionXTextField.getText());
             int y = Integer.parseInt(posicionYTextField.getText());
             String tipoIndividuo = individuosComboBox.getValue();
-            int turnosVida=(int)turnosDeVida.getValue();
-            int probabilidadReproduccion=(int)probReproduccion.getValue();
-            int probabilidadClonacion= (int)probClonacion.getValue();
+            int turnosVida = (int) turnosDeVida.getValue();
+            int probabilidadReproduccion = (int) probReproduccion.getValue();
+            int probabilidadClonacion = (int) probClonacion.getValue();
             if (x > 0 && x <= tamañoAnchura && y > 0 && y <= tamañoAltura) {
                 VBox cell = (VBox) getNodeByRowColumnIndex(y - 1, x - 1, tableroDeJuego);
                 if (cell != null) {
                     if (cell.getChildren().stream().filter(node -> node instanceof Text).count() < 3) {
-                        Individuo individuo = new Individuo(n_individuos, turno, turnosVida, probabilidadReproduccion, probabilidadClonacion, 100 - probabilidadReproduccion, x, y, tipoIndividuo);
-                        listaIndividuosArray.add(individuo); // Añadirlo a la lista de individuos
-                        // Crear el nodo de texto para el individuo con los turnos de vida
-                        Text individuoText = new Text( " (" + individuo.getTurnosDeVida() + ")");
+                        Text individuoText = new Text(tipoIndividuo);
+                        n_individuos = n_individuos + 1;
                         individuoText.setFill(Color.RED); // Color diferente para los individuos
                         individuoText.setFont(Font.font("System", 12));
                         cell.getChildren().add(individuoText);
-                        //Text individuoText = new Text(tipoIndividuo);
-                        //n_individuos=n_individuos+1;
-                        //individuoText.setFill(Color.RED); // Color diferente para los individuos
-                        //individuoText.setFont(Font.font("System", 12));
-                        //cell.getChildren().add(individuoText);
-                        //Individuo i1= new Individuo(n_individuos,turno,turnosVida,probabilidadReproduccion, probabilidadClonacion, 100 - probabilidadReproduccion,x,y,tipoIndividuo);
-                        //ElementoLE<Individuo> ind= new ElementoLE<>(i1);
-                        //listaEnlazada.add(i1);
-                        //listaIndividuosArray.add(i1); // Añadir el individuo a listaIndividuosArray
-                        //String contenidoLista=listaEnlazada.toString();
-                        //System.out.println(contenidoLista);
+                        Individuo i1 = new Individuo(3, 3, 3, 3, 3, 3, x, y, tipoIndividuo);
+                        i1.setIdentificacionIndividuo(n_individuos);
+                        i1.setGeneracionIndividuo(turno);
+                        i1.setTurnosDeVida(turnosVida);
+                        i1.setProbabilidadReproduccion(probabilidadReproduccion);
+                        i1.setProbabilidadClonacion(probabilidadClonacion);
+                        i1.setProbabilidadMuerte(100 - probabilidadReproduccion);
+                        listaEnlazada.add(i1);
+                        String contenidoLista = listaEnlazada.toString();
+                        System.out.println(contenidoLista);
                     } else {
                         showAlert("Error", "No se pueden agregar más de 3 individuos por casilla.");
                     }
@@ -169,6 +149,11 @@ public class TableroController {
         }
     }
 
+    private void imprimirListaIndiviuos() {
+        String contenidoLista = listaEnlazada.toString();
+        System.out.println(contenidoLista);
+    }
+
     @FXML
     private void onSiguienteTurnoButton() {
         pasarTurno();
@@ -176,6 +161,7 @@ public class TableroController {
 
     private void pasarTurno() {
         // Decrementar el tiempo de vida de cada recurso y eliminarlos si su tiempo se ha agotado
+        ActualizarTiempoDeVida();
         Iterator<Recursos> iterator = recursos.iterator();
         while (iterator.hasNext()) {
             Recursos recurso = iterator.next();
@@ -189,18 +175,34 @@ public class TableroController {
         // Generar nuevos recursos según sus probabilidades
         generarNuevosRecursos();
 
-
-        Iterator<Individuo> individuoIterator = listaIndividuosArray.iterator();
-        while (individuoIterator.hasNext()) {
-            Individuo individuo = individuoIterator.next();
-            individuo.decrementarTurnosDeVida();
-            if (!individuo.estaVivo()) {
-                individuoIterator.remove();
-                removerIndividuoDeTablero(individuo);
-            }
-        }
         // Imprimir el estado actual de los recursos para depuración
         imprimirRecursos();
+        imprimirListaIndiviuos();
+        turno = turno + 1;
+    }
+
+    private void movimientoIndividuos() {
+        for (int i = 0; i < listaEnlazada.getNumeroElementos(); i++) {
+            int r1 = random.nextInt(tamañoAnchura - 2) + 2;
+            int r2 = random.nextInt(tamañoAltura - 2) + 2;
+            if (listaEnlazada.getElemento(i).getData().getTipo() == "Basico") {
+                listaEnlazada.getElemento(i).getData().setX(r1);
+                listaEnlazada.getElemento(i).getData().setY(r2);
+            } else if (listaEnlazada.getElemento(i).getData().getTipo() == "Normal") {
+                int indice = random.nextInt(recursos.size());
+                listaEnlazada.getElemento(i).getData().setX(recursos.get(indice).getX());
+                listaEnlazada.getElemento(i).getData().setY(recursos.get(indice).getY());
+            }
+        }
+    }
+
+    private void ActualizarTiempoDeVida() {
+        for (int i = 0; i < listaEnlazada.getNumeroElementos(); i++) {
+            listaEnlazada.getElemento(i).getData().setTurnosDeVida(listaEnlazada.getElemento(i).getData().getTurnosDeVida() - 1);
+            if (listaEnlazada.getElemento(i).getData().getTurnosDeVida() <= 0) {
+                listaEnlazada.del(i);
+            }
+        }
     }
 
     private void generarNuevosRecursos() {
@@ -221,7 +223,8 @@ public class TableroController {
                     else if (r < probAgua + probComida) tipoRecurso = "Comida";
                     else if (r < probAgua + probComida + probMontaña) tipoRecurso = "Montaña";
                     else if (r < probAgua + probComida + probMontaña + probPozo) tipoRecurso = "Pozo";
-                    else if (r < probAgua + probComida + probMontaña + probPozo + probBiblioteca) tipoRecurso = "Biblioteca";
+                    else if (r < probAgua + probComida + probMontaña + probPozo + probBiblioteca)
+                        tipoRecurso = "Biblioteca";
                     else tipoRecurso = "Tesoro";
 
                     Recursos nuevoRecurso = crearRecurso(tipoRecurso, j, i);
@@ -231,8 +234,9 @@ public class TableroController {
             }
         }
     }
+
     private int generarTiempoAparicionAleatorio() {
-        return random.nextInt(10)+1; // Genera un número aleatorio entre 1 y 10
+        return random.nextInt(10) + 1; // Genera un número aleatorio entre 1 y 10
     }
 
     private Recursos crearRecurso(String tipoRecurso, int x, int y) {
@@ -269,26 +273,6 @@ public class TableroController {
             cell.getChildren().removeIf(node -> node instanceof Label && ((Label) node).getText().equals(recurso.getClass().getSimpleName()));
         }
     }
-    private void removerIndividuoDeTablero(Individuo individuo) {
-        int x = individuo.getX();
-        int y = individuo.getY();
-        int id = individuo.getIdentificacionIndividuo(); // Obtenemos el ID del individuo
-        VBox cellLayout = (VBox) getNodeByRowColumnIndex(y - 1, x - 1, tableroDeJuego);
-        if (cellLayout != null) {
-            cellLayout.getChildren().removeIf(node -> node instanceof Text && obtenerIdDeTexto((Text) node) == id);
-        }
-    }
-
-    // Método para obtener el ID de un nodo de tipo Text
-    private int obtenerIdDeTexto(Text textNode) {
-        // El formato del texto debería ser "Individuo{id}"
-        String[] parts = textNode.getText().split("\\{");
-        if (parts.length > 1) {
-            String idString = parts[1].replace("}", "");
-            return Integer.parseInt(idString);
-        }
-        return -1; // Retorna -1 si no se puede obtener el ID correctamente
-    }
 
     private void imprimirRecursos() {
         System.out.println("Recursos actuales:");
@@ -315,8 +299,8 @@ public class TableroController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    /*protected void onNextTurn() {
+}
+   /* protected void onNextTurn() {
         MatrizDePosiciones MatrizIndividuos= new MatrizDePosiciones(this.tamañoAltura,this.tamañoAnchura);
         MatrizDePosicionesRecurso MatrizRecursos= new MatrizDePosicionesRecurso(this.tamañoAltura,this.tamañoAnchura);
         ElementoDeLaMatriz[][] listaIndividuos= MatrizIndividuos.getElementoDeLaMatriz();
@@ -331,7 +315,7 @@ public class TableroController {
                     }
                 }
 
-                 if(listaIndividuos[i][j].getIndividuo2()!=null){
+                if(listaIndividuos[i][j].getIndividuo2()!=null){
                     listaIndividuos[i][j].getIndividuo2().setTurnosDeVida(Individuo.getTurnosDeVida()-1);
                     if (listaIndividuos[i][j].getIndividuo2().getTurnosDeVida()<=0){
                         listaIndividuos[i][j].setIndividuo2(null);
@@ -341,7 +325,7 @@ public class TableroController {
                         }
                     }
                 }
-                 if(listaIndividuos[i][j].getIndividuo1()!=null){
+                if(listaIndividuos[i][j].getIndividuo1()!=null){
                     listaIndividuos[i][j].getIndividuo1().
                             setTurnosDeVida(listaIndividuos[i][j].getIndividuo1().getTurnosDeVida()-1);
                     if (listaIndividuos[i][j].getIndividuo1().getTurnosDeVida()<=0){
@@ -400,6 +384,4 @@ public class TableroController {
 //        }
 
     }
-
-     */
-}
+]/*/

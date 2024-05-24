@@ -1,6 +1,6 @@
 package Recursos;
 
-public abstract class Recursos {
+public  class Recursos {
     private int x;
     private int y;
     private int tiempoAparicion;
@@ -48,5 +48,4 @@ public abstract class Recursos {
         posicion[0]=getX();
         posicion[1]=getY();
     }
-    public abstract void efecto();
 }

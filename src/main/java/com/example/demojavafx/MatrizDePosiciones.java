@@ -1,6 +1,5 @@
 package com.example.demojavafx;
 
-import Recursos.Recursos;
 import Recursos.Individuo;
 
 public class MatrizDePosiciones {

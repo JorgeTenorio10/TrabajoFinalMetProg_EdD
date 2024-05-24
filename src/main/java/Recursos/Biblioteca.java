@@ -16,8 +16,5 @@ public class Biblioteca extends Recursos {
         AumentoProbabilidad = aumentoProbabilidad;
     }
 
-    @Override
-    public void efecto() {
-        Individuo.setProbabilidadClonacion(Individuo.getProbabilidadClonacion()+ Individuo.getProbabilidadClonacion()*getAumentoProbabilidad());
-    }
+
 }

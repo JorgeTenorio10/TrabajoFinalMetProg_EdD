@@ -1,13 +1,13 @@
 package Recursos;
 import com.example.demojavafx.TableroController;
 public class Individuo {
-    private static int nextId = 1;
-    private static int identificacionIndividuo;
-    private static int GeneracionIndividuo;
-    private static int TurnosDeVida;
-    private static float ProbabilidadReproduccion;
-    private static float ProbabilidadClonacion;
-    private static float ProbabilidadMuerte;
+    private  int nextId = 1;
+    private  int identificacionIndividuo;
+    private  int GeneracionIndividuo;
+    private int TurnosDeVida;
+    private float ProbabilidadReproduccion;
+    private  float ProbabilidadClonacion;
+    private  float ProbabilidadMuerte;
     private int x;
     private int y;
     private String tipo;
@@ -26,51 +26,51 @@ public class Individuo {
         this.tipo=tipo;
     }
 
-    public static int getIdentificacionIndividuo() {
+    public  int getIdentificacionIndividuo() {
         return identificacionIndividuo;
     }
 
-    public static int getGeneracionIndividuo() {
+    public  int getGeneracionIndividuo() {
         return GeneracionIndividuo;
     }
 
-    public  static int getTurnosDeVida() {
+    public   int getTurnosDeVida() {
         return TurnosDeVida;
     }
 
-    public static float getProbabilidadReproduccion() {
+    public  float getProbabilidadReproduccion() {
         return ProbabilidadReproduccion;
     }
 
-    public static float getProbabilidadClonacion() {
+    public  float getProbabilidadClonacion() {
         return ProbabilidadClonacion;
     }
 
-    public static float getProbabilidadMuerte() {
+    public  float getProbabilidadMuerte() {
         return ProbabilidadMuerte;
     }
 
-    public static void setIdentificacionIndividuo(int identificacionIndividuo) {
+    public  void setIdentificacionIndividuo(int identificacionIndividuo) {
         identificacionIndividuo = identificacionIndividuo;
     }
 
-    public static void setGeneracionIndividuo(int generacionIndividuo) {
+    public  void setGeneracionIndividuo(int generacionIndividuo) {
         GeneracionIndividuo = generacionIndividuo;
     }
 
-    public static void setTurnosDeVida(int turnosDeVida) {
+    public  void setTurnosDeVida(int turnosDeVida) {
         TurnosDeVida = turnosDeVida;
     }
 
-    public static void setProbabilidadClonacion(float probabilidadClonacion) {
+    public  void setProbabilidadClonacion(float probabilidadClonacion) {
         ProbabilidadClonacion = probabilidadClonacion;
     }
 
-    public static void setProbabilidadReproduccion(float probabilidadReproduccion) {
+    public  void setProbabilidadReproduccion(float probabilidadReproduccion) {
         ProbabilidadReproduccion = probabilidadReproduccion;
     }
 
-    public static void setProbabilidadMuerte(float probabilidadMuerte) {
+    public  void setProbabilidadMuerte(float probabilidadMuerte) {
         ProbabilidadMuerte = probabilidadMuerte;
     }
     public int getY() {
@@ -88,8 +88,14 @@ public class Individuo {
     public void setX(int x) {
         this.x = x;
     }
-    public void getTipo(String tipo){ this.tipo=tipo;}
-    public void setTipo(String tipo){ this.tipo=tipo;}
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
     public int[] getPosicion(){
         int[] posicion= new int[2];

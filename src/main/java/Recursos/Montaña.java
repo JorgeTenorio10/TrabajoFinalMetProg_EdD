@@ -8,8 +8,5 @@ public class Montaña extends Recursos {
         setY(y);
         setTiempoAparicion(tiempoAparicion);
     }
-    @Override
-    public void efecto() {
-        Individuo.setTurnosDeVida(Individuo.getTurnosDeVida()-2);
-    }
+
 }
