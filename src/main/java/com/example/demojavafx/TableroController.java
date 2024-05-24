@@ -51,6 +51,7 @@ public class TableroController {
 
     @FXML
     private TextField posicionYTextField;
+    private ArrayList<Individuo> listaIndividuosArray = new ArrayList<>();
 
     private ListaEnlazada<Individuo> listaEnlazada=new ListaEnlazada<>();
 
@@ -110,6 +111,18 @@ public class TableroController {
         int index = random.nextInt(tiposRecursos.length);
         return tiposRecursos[index];
     }
+    private void agregarIndividuoAlTablero(Individuo individuo) {
+        int x = individuo.getX();
+        int y = individuo.getY();
+        int id = individuo.getIdentificacionIndividuo();
+        VBox cellLayout = (VBox) getNodeByRowColumnIndex(y - 1, x - 1, tableroDeJuego);
+        if (cellLayout != null) {
+            Text individuoText = new Text( " (" + individuo.getTurnosDeVida() + ")");
+            individuoText.setFill(Color.RED); // Color diferente para los individuos
+            individuoText.setFont(Font.font("System", 12));
+            cellLayout.getChildren().add(individuoText);
+        }
+    }
 
     @FXML
     private void onInsertarIndividuoClick() {
@@ -124,16 +137,24 @@ public class TableroController {
                 VBox cell = (VBox) getNodeByRowColumnIndex(y - 1, x - 1, tableroDeJuego);
                 if (cell != null) {
                     if (cell.getChildren().stream().filter(node -> node instanceof Text).count() < 3) {
-                        Text individuoText = new Text(tipoIndividuo);
-                        n_individuos=n_individuos+1;
+                        Individuo individuo = new Individuo(n_individuos, turno, turnosVida, probabilidadReproduccion, probabilidadClonacion, 100 - probabilidadReproduccion, x, y, tipoIndividuo);
+                        listaIndividuosArray.add(individuo); // Añadirlo a la lista de individuos
+                        // Crear el nodo de texto para el individuo con los turnos de vida
+                        Text individuoText = new Text( " (" + individuo.getTurnosDeVida() + ")");
                         individuoText.setFill(Color.RED); // Color diferente para los individuos
                         individuoText.setFont(Font.font("System", 12));
                         cell.getChildren().add(individuoText);
-                        Individuo i1= new Individuo(n_individuos,turno,turnosVida,probabilidadReproduccion, probabilidadClonacion, 100 - probabilidadReproduccion,x,y,tipoIndividuo);
-                        ElementoLE<Individuo> ind= new ElementoLE<>(i1);
-                        listaEnlazada.add(i1);
-                        String contenidoLista=listaEnlazada.toString();
-                        System.out.println(contenidoLista);
+                        //Text individuoText = new Text(tipoIndividuo);
+                        //n_individuos=n_individuos+1;
+                        //individuoText.setFill(Color.RED); // Color diferente para los individuos
+                        //individuoText.setFont(Font.font("System", 12));
+                        //cell.getChildren().add(individuoText);
+                        //Individuo i1= new Individuo(n_individuos,turno,turnosVida,probabilidadReproduccion, probabilidadClonacion, 100 - probabilidadReproduccion,x,y,tipoIndividuo);
+                        //ElementoLE<Individuo> ind= new ElementoLE<>(i1);
+                        //listaEnlazada.add(i1);
+                        //listaIndividuosArray.add(i1); // Añadir el individuo a listaIndividuosArray
+                        //String contenidoLista=listaEnlazada.toString();
+                        //System.out.println(contenidoLista);
                     } else {
                         showAlert("Error", "No se pueden agregar más de 3 individuos por casilla.");
                     }
@@ -168,6 +189,16 @@ public class TableroController {
         // Generar nuevos recursos según sus probabilidades
         generarNuevosRecursos();
 
+
+        Iterator<Individuo> individuoIterator = listaIndividuosArray.iterator();
+        while (individuoIterator.hasNext()) {
+            Individuo individuo = individuoIterator.next();
+            individuo.decrementarTurnosDeVida();
+            if (!individuo.estaVivo()) {
+                individuoIterator.remove();
+                removerIndividuoDeTablero(individuo);
+            }
+        }
         // Imprimir el estado actual de los recursos para depuración
         imprimirRecursos();
     }
@@ -238,6 +269,26 @@ public class TableroController {
             cell.getChildren().removeIf(node -> node instanceof Label && ((Label) node).getText().equals(recurso.getClass().getSimpleName()));
         }
     }
+    private void removerIndividuoDeTablero(Individuo individuo) {
+        int x = individuo.getX();
+        int y = individuo.getY();
+        int id = individuo.getIdentificacionIndividuo(); // Obtenemos el ID del individuo
+        VBox cellLayout = (VBox) getNodeByRowColumnIndex(y - 1, x - 1, tableroDeJuego);
+        if (cellLayout != null) {
+            cellLayout.getChildren().removeIf(node -> node instanceof Text && obtenerIdDeTexto((Text) node) == id);
+        }
+    }
+
+    // Método para obtener el ID de un nodo de tipo Text
+    private int obtenerIdDeTexto(Text textNode) {
+        // El formato del texto debería ser "Individuo{id}"
+        String[] parts = textNode.getText().split("\\{");
+        if (parts.length > 1) {
+            String idString = parts[1].replace("}", "");
+            return Integer.parseInt(idString);
+        }
+        return -1; // Retorna -1 si no se puede obtener el ID correctamente
+    }
 
     private void imprimirRecursos() {
         System.out.println("Recursos actuales:");
@@ -265,7 +316,7 @@ public class TableroController {
         alert.showAndWait();
     }
 
-    protected void onNextTurn() {
+    /*protected void onNextTurn() {
         MatrizDePosiciones MatrizIndividuos= new MatrizDePosiciones(this.tamañoAltura,this.tamañoAnchura);
         MatrizDePosicionesRecurso MatrizRecursos= new MatrizDePosicionesRecurso(this.tamañoAltura,this.tamañoAnchura);
         ElementoDeLaMatriz[][] listaIndividuos= MatrizIndividuos.getElementoDeLaMatriz();
@@ -349,4 +400,6 @@ public class TableroController {
 //        }
 
     }
+
+     */
 }

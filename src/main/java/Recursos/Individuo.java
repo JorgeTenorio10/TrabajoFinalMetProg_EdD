@@ -1,7 +1,8 @@
 package Recursos;
 import com.example.demojavafx.TableroController;
 public class Individuo {
-    private static int IdentificacionIndividuo;
+    private static int nextId = 1;
+    private static int identificacionIndividuo;
     private static int GeneracionIndividuo;
     private static int TurnosDeVida;
     private static float ProbabilidadReproduccion;
@@ -14,7 +15,7 @@ public class Individuo {
     public Individuo(int identificacionIndividuo,int generacionIndividuo,int turnosDeVida,
                      float probabilidadReproduccion,float probabilidadClonacion,
                      float probabilidadMuerte,int x,int y, String tipo){
-        this.IdentificacionIndividuo=identificacionIndividuo;
+        this.identificacionIndividuo = nextId++;
         this.GeneracionIndividuo=generacionIndividuo;
         this.TurnosDeVida=turnosDeVida;
         this.ProbabilidadReproduccion=probabilidadReproduccion;
@@ -26,7 +27,7 @@ public class Individuo {
     }
 
     public static int getIdentificacionIndividuo() {
-        return IdentificacionIndividuo;
+        return identificacionIndividuo;
     }
 
     public static int getGeneracionIndividuo() {
@@ -50,7 +51,7 @@ public class Individuo {
     }
 
     public static void setIdentificacionIndividuo(int identificacionIndividuo) {
-        IdentificacionIndividuo = identificacionIndividuo;
+        identificacionIndividuo = identificacionIndividuo;
     }
 
     public static void setGeneracionIndividuo(int generacionIndividuo) {
@@ -87,6 +88,9 @@ public class Individuo {
     public void setX(int x) {
         this.x = x;
     }
+    public void getTipo(String tipo){ this.tipo=tipo;}
+    public void setTipo(String tipo){ this.tipo=tipo;}
+
     public int[] getPosicion(){
         int[] posicion= new int[2];
         posicion[0]=this.x;
@@ -98,10 +102,18 @@ public class Individuo {
         posicion[0]=getX();
         posicion[1]=getY();
     }
+
+    public void decrementarTurnosDeVida() {
+        this.TurnosDeVida--;
+    }
+
+    public boolean estaVivo() {
+        return this.TurnosDeVida > 0;
+    }
     @Override
     public String toString() {
         return "Individuo{" +
-                "identificacion="+ IdentificacionIndividuo+
+                "identificacion="+ identificacionIndividuo+
                 ",generacion=" + GeneracionIndividuo+
                 ",turnos de vida= "+ TurnosDeVida+
                 ",probabilidad de reproduccion="+ ProbabilidadReproduccion+
