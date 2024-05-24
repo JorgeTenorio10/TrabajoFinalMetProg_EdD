@@ -94,10 +94,38 @@ public class TableroController {
                         recursos.add(recurso);
                     }
                 }
+                int row = i;
+                int column = j;
+                cellLayout.setOnMouseClicked(event -> onCellClicked(row, column));
 
                 tableroDeJuego.add(cellLayout, j, i);
             }
         }
+    }
+    private void onCellClicked(int row, int column) {
+        StringBuilder info = new StringBuilder();
+        info.append("Celda clickeada: (").append(column+1).append(", ").append(row+1).append(")\n");
+        info.append("Recursos:\n");
+        for (Recursos recurso : recursos) {
+            if (recurso.getX() == column && recurso.getY() == row) {
+                info.append("- Tipo: ").append(recurso.getClass().getSimpleName())
+                        .append(", Tiempo de vida restante: ").append(recurso.getTiempoAparicion()).append("\n");
+            }
+        }
+
+        // Obtener información de los individuos en esta celda
+        info.append("Individuos:\n");
+        ElementoLE<Individuo> current = listaEnlazada.getPrimero();
+        while (current != null) {
+            Individuo individuo = current.getData();
+            if (individuo.getX() == column && individuo.getY() == row) {
+                //No se como imprimirlo miralo tu
+            }
+            current = current.getSiguiente();
+        }
+
+        // Mostrar la información en una alerta
+        showAlert("Información de la Celda", info.toString());
     }
 
     // Método para obtener un tipo de recurso aleatorio
