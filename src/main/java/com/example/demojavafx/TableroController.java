@@ -171,6 +171,7 @@ public class TableroController {
                 removerRecursoDeTablero(recurso);
             }
         }
+        movimientoIndividuos();
 
         // Generar nuevos recursos según sus probabilidades
         generarNuevosRecursos();
@@ -182,16 +183,20 @@ public class TableroController {
     }
 
     private void movimientoIndividuos() {
+        int min=1;
         for (int i = 0; i < listaEnlazada.getNumeroElementos(); i++) {
-            int r1 = random.nextInt(tamañoAnchura - 2) + 2;
-            int r2 = random.nextInt(tamañoAltura - 2) + 2;
-            if (listaEnlazada.getElemento(i).getData().getTipo() == "Basico") {
+            int r1 = random.nextInt(tamañoAnchura - min-1) + min;
+            int r2 = random.nextInt(tamañoAltura - min-1) + min;
+            if (listaEnlazada.getElemento(i).getData().getTipo() == "Básico") {
                 listaEnlazada.getElemento(i).getData().setX(r1);
                 listaEnlazada.getElemento(i).getData().setY(r2);
             } else if (listaEnlazada.getElemento(i).getData().getTipo() == "Normal") {
                 int indice = random.nextInt(recursos.size());
                 listaEnlazada.getElemento(i).getData().setX(recursos.get(indice).getX());
                 listaEnlazada.getElemento(i).getData().setY(recursos.get(indice).getY());
+            }
+            else if(listaEnlazada.getElemento(i).getData().getTipo()=="Avanzado"){
+
             }
         }
     }
