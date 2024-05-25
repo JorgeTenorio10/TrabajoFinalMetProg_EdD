@@ -24,7 +24,7 @@ public class HelloController implements Initializable {
 
     /** Modelo de datos **/
 
-    private ParameterDataModel parametrosData = new ParameterDataModel("Juan", 10, 20,20,20,20,20,20,20,20,20,20,20);
+    private ParameterDataModel parametrosData = new ParameterDataModel("Pepe", 10, 20,20,20,20,20,20,20,20,20,20,20);
     private ParameterDataModelProperties  modeloParaGUICompartido = new ParameterDataModelProperties(parametrosData);
 ;
 
