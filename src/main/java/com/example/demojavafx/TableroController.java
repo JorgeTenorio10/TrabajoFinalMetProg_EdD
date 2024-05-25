@@ -22,6 +22,7 @@ import java.util.Random;
 public class TableroController {
     private int tamañoAltura;
     private int tamañoAnchura;
+
     private int turno = 1;
     private int n_individuos;
 
@@ -51,6 +52,17 @@ public class TableroController {
     private ListaEnlazada<Individuo> listaEnlazada = new ListaEnlazada<>();
 
     private List<Recursos> recursos;
+    private int probAgua;
+    private int probabilidadAparicion;
+    private int probComida;
+    private int probMontaña;
+    private int probPozo;
+    private int probTesoro;
+    private int probBiblioteca;
+
+    private int probabilidadAumentoTesoro;
+    private int probabilidadReproduccion;
+    private int probabilidadAumentoBiblioteca;
 
     @FXML
     private void initialize() {
@@ -60,6 +72,18 @@ public class TableroController {
         // Opcional: Seleccionar el primer elemento por defecto
         individuosComboBox.getSelectionModel().selectFirst();
         recursos = new ArrayList<>();
+    }
+    public void setNuevosRecursos(int pAumentoTesoro, int pReproduccion, int pAumentoBiblioteca,int pAgua, int pAparicion, int pComida, int pMontaña, int pPozo, int pBiblioteca, int probTesoro){
+        this.probabilidadAumentoTesoro = pAumentoTesoro;
+        this.probabilidadReproduccion = pReproduccion;
+        this.probabilidadAumentoBiblioteca = pAumentoBiblioteca;
+        this.probAgua = pAgua;
+        this.probabilidadAparicion = pAparicion;
+        this.probComida = pComida;
+        this.probMontaña = pMontaña;
+        this.probPozo = pPozo;
+        this.probBiblioteca = pBiblioteca;
+        this.probTesoro = probTesoro;
     }
 
     public void setDimensions(int altura, int anchura) {
@@ -390,34 +414,29 @@ public class TableroController {
         }
     }
 
+
     private void generarNuevosRecursos() {
-        double probabilidadAparicion = 0.1; // Probabilidad de que aparezca un nuevo recurso en una celda
-        double probAgua = 0.2;
-        double probComida = 0.2;
-        double probMontaña = 0.2;
-        double probPozo = 0.2;
-        double probBiblioteca = 0.1;
-        double probTesoro = 0.1;
 
-        for (int i = 0; i < tamañoAltura; i++) {
-            for (int j = 0; j < tamañoAnchura; j++) {
-                if (random.nextDouble() < probabilidadAparicion) {
-                    double r = random.nextDouble();
-                    String tipoRecurso;
-                    if (r < probAgua) tipoRecurso = "Agua";
-                    else if (r < probAgua + probComida) tipoRecurso = "Comida";
-                    else if (r < probAgua + probComida + probMontaña) tipoRecurso = "Montaña";
-                    else if (r < probAgua + probComida + probMontaña + probPozo) tipoRecurso = "Pozo";
-                    else if (r < probAgua + probComida + probMontaña + probPozo + probBiblioteca)
-                        tipoRecurso = "Biblioteca";
-                    else tipoRecurso = "Tesoro";
+            for (int i = 0; i < tamañoAltura; i++) {
+                for (int j = 0; j < tamañoAnchura; j++) {
+                    if (random.nextDouble() < probabilidadAparicion/100) {
+                        double r = random.nextDouble();
+                        String tipoRecurso;
+                        if (r < probAgua/100) tipoRecurso = "Agua";
+                        else if (r < probAgua/100 + probComida/100) tipoRecurso = "Comida";
+                        else if (r < probAgua/100 + probComida/100 + probMontaña/100) tipoRecurso = "Montaña";
+                        else if (r < probAgua/100 + probComida/100 + probMontaña/100 + probPozo/100) tipoRecurso = "Pozo";
+                        else if (r < probAgua/100 + probComida/100 + probMontaña/100 + probPozo/100 + probBiblioteca/100)
+                            tipoRecurso = "Biblioteca";
+                        else tipoRecurso = "Tesoro";
 
-                    Recursos nuevoRecurso = crearRecurso(tipoRecurso, j, i);
-                    recursos.add(nuevoRecurso);
-                    agregarRecursoAlTablero(nuevoRecurso);
+                        Recursos nuevoRecurso = crearRecurso(tipoRecurso, j, i);
+                        recursos.add(nuevoRecurso);
+                        agregarRecursoAlTablero(nuevoRecurso);
+                    }
                 }
             }
-        }
+
     }
 
     private int generarTiempoAparicionAleatorio() {

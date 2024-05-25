@@ -1,6 +1,7 @@
 package com.example.demojavafx;
 
 
+import Recursos.Recursos;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -81,7 +82,47 @@ public class ParameterController implements Initializable {
 
         sliderTamañoAnchura.setMin(1);
         sliderTamañoAnchura.setMax(20);
-        sliderTamañoAnchura.setValue(20); // Valor inicial
+        sliderTamañoAnchura.setValue(20);
+
+        sliderProbabilidadReproduccion.setMin(1);
+        sliderProbabilidadReproduccion.setMax(50);
+        sliderProbabilidadReproduccion.setValue(100);
+
+        sliderProbabilidadAparicionObjetos.setMin(1);
+        sliderProbabilidadAparicionObjetos.setMax(50);
+        sliderProbabilidadAparicionObjetos.setValue(100);
+
+        sliderProbabilidadAumentoTesoro.setMin(1);
+        sliderProbabilidadAumentoTesoro.setMax(50);
+        sliderProbabilidadAumentoTesoro.setValue(100);
+
+        sliderProbabilidadAumentoBiblioteca.setMin(1);
+        sliderProbabilidadAumentoBiblioteca.setMax(50);
+        sliderProbabilidadAumentoBiblioteca.setValue(100);
+
+        sliderProbAparicionComida.setMin(1);
+        sliderProbAparicionComida.setMax(50);
+        sliderProbAparicionComida.setValue(100);
+
+        sliderProbAparicionAgua.setMin(1);
+        sliderProbAparicionAgua.setMax(50);
+        sliderProbAparicionAgua.setValue(100);
+
+        sliderProbAparicionMontaña.setMin(1);
+        sliderProbAparicionMontaña.setMax(50);
+        sliderProbAparicionMontaña.setValue(100);
+
+        sliderProbAparicionBiblioteca.setMin(1);
+        sliderProbAparicionBiblioteca.setMax(50);
+        sliderProbAparicionBiblioteca.setValue(100);
+
+        sliderProbAparicionPozo.setMin(1);
+        sliderProbAparicionPozo.setMax(50);
+        sliderProbAparicionPozo.setValue(100);
+
+        sliderProbAparicionTesoro.setMin(1);
+        sliderProbAparicionTesoro.setMax(50);
+        sliderProbAparicionTesoro.setValue(100);
 
         sliderTamañoAltura.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -96,6 +137,81 @@ public class ParameterController implements Initializable {
                 actualizarTablero();
             }
         });
+        sliderProbabilidadReproduccion.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+        sliderProbabilidadAparicionObjetos.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+        sliderProbabilidadAumentoTesoro.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+        sliderProbabilidadAumentoBiblioteca.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });sliderProbAparicionComida.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+        sliderProbAparicionAgua.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+        sliderProbAparicionMontaña.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+        sliderProbAparicionBiblioteca.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+        sliderProbAparicionPozo.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+        sliderProbAparicionTesoro.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                generarNuevosRecursos();
+            }
+        });
+
+    }
+    private void generarNuevosRecursos() {
+        if (tableroController != null){
+            int probabilidadReproduccion =  (int) sliderProbabilidadReproduccion.getValue() ;
+            int probabilidadAumentoTesoro =  (int) sliderProbabilidadAumentoTesoro.getValue() ;
+            int probabilidadAumentoBiblioteca =  (int) sliderProbabilidadAumentoBiblioteca.getValue() ;
+            int probabilidadAparicion = (int) sliderProbabilidadAparicionObjetos.getValue(); // Probabilidad de que aparezca un nuevo recurso en una celda
+            int probAgua =  (int) sliderProbAparicionAgua.getValue() ;
+            int probComida =  (int) sliderProbAparicionComida.getValue();
+            int probMontaña =  (int) sliderProbAparicionMontaña.getValue();
+            int probPozo =  (int) sliderProbAparicionPozo.getValue();
+            int probBiblioteca =  (int) sliderProbAparicionBiblioteca.getValue();
+            int probTesoro =  (int) sliderProbAparicionTesoro.getValue();
+            tableroController.setNuevosRecursos(probabilidadAumentoTesoro, probabilidadReproduccion, probabilidadAumentoBiblioteca, probAgua, probabilidadAparicion, probComida, probMontaña, probPozo, probBiblioteca, probTesoro);
+        }
     }
 
     private void actualizarTablero() {
@@ -140,7 +256,7 @@ public class ParameterController implements Initializable {
         EstadoJuego gameState = new EstadoJuego(nombrePartida, tableroController.getTamañoAltura(),
                 tableroController.getTamañoAnchura(),
                 tableroController.getRecursos(),
-                tableroController.getIndividuos());
+                tableroController.getListaEnlazada());
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("game_state.dat"))) {
             oos.writeObject(gameState);
             showAlert("Guardar partida", "La partida ha sido guardada correctamente.");
