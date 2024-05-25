@@ -7,6 +7,7 @@ import Recursos.*;
 import Recursos.Recursos;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
         import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -38,6 +39,7 @@ public class TableroController {
     ElementoDeLaMatriz[][] listaIndividuos = MatrizIndividuos.getElementoDeLaMatriz();
     @FXML
     private Label welcomeText;
+    private ListaEnlazada<Individuo> individuosAñadir=new ListaEnlazada<>();
 
     @FXML
     private GridPane tableroDeJuego;
@@ -126,6 +128,7 @@ public class TableroController {
             }
         }
     }
+
     private void onCellClicked(int row, int column) {
         StringBuilder info = new StringBuilder();
         info.append("Celda clickeada: (").append(column+1).append(", ").append(row+1).append(")\n");
@@ -160,43 +163,44 @@ public class TableroController {
             Individuo ind1= listaEnlazada.getElemento(i).getData();
             for(int j=i+1; j<listaEnlazada.getNumeroElementos();j++){
                 Individuo ind2= listaEnlazada.getElemento(j).getData();
-                    if(listaEnlazada.getElemento(i).getData().getX()==listaEnlazada.getElemento(j).getData().getX()&&listaEnlazada.getElemento(j).getData().getY()==listaEnlazada.getElemento(i).getData().getY()){
-                        if(listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()*listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()>=random){
-                            if(comprobarTamaño(listaEnlazada.getElemento(i).getData().getX(), listaEnlazada.getElemento(i).getData().getY())){
-                                n_individuos++;
-                                String tipo;
-                                if(ind1.getTipo()==ind2.getTipo()){
-                                    tipo=ind1.getTipo();
-                                }
-                                else{
-                                    float nrand= (float) ((Math.random()*100)+1);
-                                    float probAumentoReproduccion=20;
-                                    if ((ind1.getTipo()=="básico"||ind1.getTipo()=="normal")&&(ind2.getTipo()=="normal"||ind2.getTipo()=="avanzado")){
-                                        if(probAumentoReproduccion>nrand){
-                                            tipo= ind2.getTipo();
-                                        }
-                                        else{
-                                            tipo=ind1.getTipo();
-                                        }
-                                    }
-                                    else if((ind2.getTipo()=="básico"||ind2.getTipo()=="normal")&&(ind1.getTipo()=="normal"||ind1.getTipo()=="avanzado")){
-                                        if(probAumentoReproduccion>nrand){
-                                            tipo= ind1.getTipo();
-                                        }
-                                        else{
-                                            tipo=ind2.getTipo();
-                                        }
+                if(listaEnlazada.getElemento(i).getData().getX()==listaEnlazada.getElemento(j).getData().getX()&&listaEnlazada.getElemento(j).getData().getY()==listaEnlazada.getElemento(i).getData().getY()){
+                    if(listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()*listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()>=random){
+                        if(comprobarTamaño(listaEnlazada.getElemento(i).getData().getX(), listaEnlazada.getElemento(i).getData().getY())){
+                            n_individuos++;
+                            String tipo;
+                            if(ind1.getTipo()==ind2.getTipo()){
+                                tipo=ind1.getTipo();
+                            }
+                            else{
+                                float nrand= (float) ((Math.random()*100)+1);
+                                float probAumentoReproduccion=20;
+                                if ((ind1.getTipo()=="básico"||ind1.getTipo()=="normal")&&(ind2.getTipo()=="normal"||ind2.getTipo()=="avanzado")){
+                                    if(probAumentoReproduccion>nrand){
+                                        tipo= ind2.getTipo();
                                     }
                                     else{
-                                        tipo="básico";
+                                        tipo=ind1.getTipo();
                                     }
                                 }
-                                Individuo i1= new Individuo(n_individuos,turno, ind1.getTurnosDeVida()+ ind2.getTurnosDeVida(),(ind1.getProbabilidadReproduccion()+ind2.getProbabilidadReproduccion())/2, (ind1.getProbabilidadClonacion()+ind2.getProbabilidadClonacion())/2,(ind1.getProbabilidadMuerte()+ind2.getProbabilidadMuerte())/2,ind1.getX(),ind2.getY(),tipo );
-                                listaEnlazada.add(i1);
+                                else if((ind2.getTipo()=="básico"||ind2.getTipo()=="normal")&&(ind1.getTipo()=="normal"||ind1.getTipo()=="avanzado")){
+                                    if(probAumentoReproduccion>nrand){
+                                        tipo= ind1.getTipo();
+                                    }
+                                    else{
+                                        tipo=ind2.getTipo();
+                                    }
+                                }
+                                else{
+                                    tipo="básico";
+                                }
                             }
+                            Individuo i1= new Individuo(n_individuos,turno, ind1.getTurnosDeVida()+ ind2.getTurnosDeVida(),(ind1.getProbabilidadReproduccion()+ind2.getProbabilidadReproduccion())/2, (ind1.getProbabilidadClonacion()+ind2.getProbabilidadClonacion())/2,(ind1.getProbabilidadMuerte()+ind2.getProbabilidadMuerte())/2,ind1.getX(),ind2.getY(),tipo );
+                            listaEnlazada.add(i1);
+                            agregarIndividuoAlTablero(i1);
                         }
                     }
                 }
+            }
         }
     }
     public boolean comprobarTamaño(int x, int y){
@@ -284,9 +288,12 @@ public class TableroController {
         recursoEfecto();
         //Reproduccion de individuos
         reproduccionIndividuos();
+        //Clonacion de individuos;
+        clonacion();
+        //muerte de individuos
+        muerteIndividuos();
         // Generar nuevos recursos según sus probabilidades
         generarNuevosRecursos();
-
         // Imprimir el estado actual de los recursos para depuración
         imprimirRecursos();
         imprimirListaIndiviuos();
@@ -299,14 +306,19 @@ public class TableroController {
             int r1 = random.nextInt(tamañoAnchura - min-1) + min;
             int r2 = random.nextInt(tamañoAltura - min-1) + min;
             if (listaEnlazada.getElemento(i).getData().getTipo() == "Básico") {
+                eliminarIndividuoDeTablero(listaEnlazada.getElemento(i).getData().getX()-1,listaEnlazada.getElemento(i).getData().getY()-1,listaEnlazada.getElemento(i).getData());
                 listaEnlazada.getElemento(i).getData().setX(r1);
                 listaEnlazada.getElemento(i).getData().setY(r2);
+                agregarIndividuoAlTablero(listaEnlazada.getElemento(i).getData());
             } else if (listaEnlazada.getElemento(i).getData().getTipo() == "Normal") {
                 int indice = random.nextInt(recursos.size());
+                eliminarIndividuoDeTablero(listaEnlazada.getElemento(i).getData().getX()-1,listaEnlazada.getElemento(i).getData().getY()-1,listaEnlazada.getElemento(i).getData());
                 listaEnlazada.getElemento(i).getData().setX(recursos.get(indice).getX());
                 listaEnlazada.getElemento(i).getData().setY(recursos.get(indice).getY());
+                agregarIndividuoAlTablero(listaEnlazada.getElemento(i).getData());
             }
             else if(listaEnlazada.getElemento(i).getData().getTipo()=="Avanzado"){
+                eliminarIndividuoDeTablero(listaEnlazada.getElemento(i).getData().getX()-1,listaEnlazada.getElemento(i).getData().getY()-1,listaEnlazada.getElemento(i).getData());
                 int distancia=200;//introducimos un valor grande para que no haya problema
                 Recursos recursoMasCercano=null;
                 for (int j=0; j<recursos.size(); j++){
@@ -321,6 +333,7 @@ public class TableroController {
                     listaEnlazada.getElemento(i).getData().setY(recursoMasCercano.getY()+1);
                     distancia=200;
                 }
+                agregarIndividuoAlTablero(listaEnlazada.getElemento(i).getData());
             }
         }
     }
@@ -375,8 +388,25 @@ public class TableroController {
             Individuo ind=listaEnlazada.getElemento(i).getData();
             if (ind.getProbabilidadClonacion()>aleatorio){
                 if(comprobarTamaño(ind.getX(),ind.getY())){
+                    n_individuos++;
                     Individuo ind1= new Individuo(n_individuos,turno,ind.getTurnosDeVida(),ind.getProbabilidadReproduccion(),ind.getProbabilidadClonacion(),ind.getProbabilidadMuerte(),ind.getX(),ind.getY(),ind.getTipo());
-                    listaEnlazada.add(ind1);
+                    individuosAñadir.add(ind1);
+                }
+            }
+        }
+        for(int i=0; i<individuosAñadir.getNumeroElementos();i++){
+            listaEnlazada.add(individuosAñadir.getElemento(i).getData());
+            agregarIndividuoAlTablero(individuosAñadir.getElemento(i).getData());
+        }
+    }
+    public void muerteIndividuos(){
+        for(int i=0; i<listaEnlazada.getNumeroElementos();i++){
+            float aleatoria=(float)(Math.random()*100)+1;
+            Individuo ind = listaEnlazada.getElemento(i).getData();
+            if(ind.getProbabilidadClonacion()>aleatoria){
+                if(comprobarTamaño(ind.getX(),ind.getY())){
+                    eliminarIndividuoDeTablero(ind.getX(),ind.getY(),listaEnlazada.getElemento(i).getData());
+                    listaEnlazada.del(i);
                 }
             }
         }
@@ -414,7 +444,6 @@ public class TableroController {
         }
     }
 
-
     private void generarNuevosRecursos() {
 
             for (int i = 0; i < tamañoAltura; i++) {
@@ -438,7 +467,6 @@ public class TableroController {
             }
 
     }
-
     private int generarTiempoAparicionAleatorio() {
         return random.nextInt(10) + 1; // Genera un número aleatorio entre 1 y 10
     }
@@ -470,6 +498,22 @@ public class TableroController {
             cell.getChildren().add(resourceLabel);
         }
     }
+    private void agregarIndividuoAlTablero(Individuo ind){
+        VBox cell= (VBox)getNodeByRowColumnIndex(ind.getY()-1,ind.getX()-1,tableroDeJuego);
+        if (cell!=null){
+            Label resourceLabel =new Label(ind.getTipo());
+            cell.getChildren().add(resourceLabel);
+            resourceLabel.setStyle(("-fx-text-fill: red;")); // Color diferente para los individuos
+            resourceLabel.setFont(Font.font("System", 12));
+        }
+    }
+    private void removerIndividuoDeTablero(Individuo ind){
+        VBox cell=(VBox) getNodeByRowColumnIndex(ind.getY(),ind.getX(),tableroDeJuego);
+        if(cell!=null){
+            cell.getChildren().removeIf(node -> node instanceof Label && ((Label)node).getText().equals(ind.getTipo()));
+        }
+
+    }
 
     private void removerRecursoDeTablero(Recursos recurso) {
         VBox cell = (VBox) getNodeByRowColumnIndex(recurso.getY(), recurso.getX(), tableroDeJuego);
@@ -495,6 +539,31 @@ public class TableroController {
         }
         return null;
     }
+    public void eliminarIndividuoDeTablero(int x, int y, Individuo individuo) {
+        // Obtener la celda en la posición (x, y)
+        VBox cell = (VBox) getNodeByRowColumnIndex(y, x, tableroDeJuego);
+
+        if (cell != null) {
+            // Buscar el Text nodo que contiene el string específico
+            Text textNodeToRemove = null;
+            for (Node node : cell.getChildren()) {
+                if (node instanceof Text && ((Text) node).getText().equals(individuo.getTipo())) {
+                    textNodeToRemove = (Text) node;
+                    break;
+                }
+            }
+            // Eliminar el Text nodo de la celda
+            if (textNodeToRemove != null) {
+                cell.getChildren().remove(textNodeToRemove);
+            } else {
+                System.out.println("String no encontrado en la celda especificada.");
+            }
+        } else {
+            System.out.println("Celda no encontrada en la posición especificada.");
+        }
+    }
+
+    // Método auxiliar para obtener el nodo en una posición específica del GridPane
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
