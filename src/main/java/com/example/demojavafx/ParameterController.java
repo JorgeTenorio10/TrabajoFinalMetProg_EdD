@@ -23,7 +23,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.*;
 
@@ -120,7 +122,33 @@ public class ParameterController implements Initializable {
 
     @FXML
     protected void onBotonGuardarClick() {
-        model.commit();
+        /*try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("game_state.dat"))) {
+            oos.writeObject(tableroController.getTamañoAltura());
+            oos.writeObject(tableroController.getTamañoAnchura());
+            oos.writeObject(tableroController.getRecursos());
+            oos.writeObject(tableroController.getIndividuos());
+
+            showAlert("Guardar partida", "La partida ha sido guardada correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "No se pudo guardar la partida.");
+        }
+
+         */
+        String nombrePartida = textfieldNombre.getText(); // Obtener el nombre de la partida de algún lugar, por ejemplo, un campo de texto
+        EstadoJuego gameState = new EstadoJuego(nombrePartida, tableroController.getTamañoAltura(),
+                tableroController.getTamañoAnchura(),
+                tableroController.getRecursos(),
+                tableroController.getIndividuos());
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("game_state.dat"))) {
+            oos.writeObject(gameState);
+            showAlert("Guardar partida", "La partida ha sido guardada correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "No se pudo guardar la partida.");
+        }
+
+
     }
 
     @FXML

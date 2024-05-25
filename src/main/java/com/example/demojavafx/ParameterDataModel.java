@@ -33,6 +33,9 @@ public class ParameterDataModel {
         this.probAparicionMontaña=probAparicionMontaña;
     }
 
+    public ParameterDataModel(String nombrePartida, int tamañoAltura, int tamañoAnchura, Object recursos, Object individuos) {
+    }
+
     public int getVelocidad() {
         return velocidad;
     }

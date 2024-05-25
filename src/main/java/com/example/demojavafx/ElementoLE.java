@@ -1,6 +1,8 @@
 package com.example.demojavafx;
 
-public class ElementoLE <TipodeDato> {
+import java.io.Serializable;
+
+public class ElementoLE <TipodeDato> implements Serializable {
     private TipodeDato data;
     private ElementoLE siguiente;
     private ElementoLE<TipodeDato> dcho;

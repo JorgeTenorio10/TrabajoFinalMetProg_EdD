@@ -1,6 +1,8 @@
 package Recursos;
 
-public  class Recursos {
+import java.io.Serializable;
+
+public  class Recursos implements Serializable {
     private int x;
     private int y;
     private int tiempoAparicion;

@@ -1,6 +1,8 @@
 package com.example.demojavafx;
 
-public class ListaEnlazada<TipoDato> {
+import java.io.Serializable;
+
+public class ListaEnlazada<TipoDato> implements Serializable {
     private ElementoLE<TipoDato> primero;
     public ListaEnlazada() {
         this.primero = null;

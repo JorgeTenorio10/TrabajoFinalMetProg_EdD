@@ -1,6 +1,9 @@
 package Recursos;
 import com.example.demojavafx.TableroController;
-public class Individuo {
+
+import java.io.Serializable;
+
+public class Individuo implements Serializable {
     private  int nextId = 1;
     private  int identificacionIndividuo;
     private  int GeneracionIndividuo;
