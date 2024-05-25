@@ -84,45 +84,45 @@ public class ParameterController implements Initializable {
         sliderTamañoAnchura.setMax(20);
         sliderTamañoAnchura.setValue(20);
 
-        sliderProbabilidadReproduccion.setMin(1);
-        sliderProbabilidadReproduccion.setMax(50);
-        sliderProbabilidadReproduccion.setValue(100);
+        sliderProbabilidadReproduccion.setMin(0);
+        sliderProbabilidadReproduccion.setMax(100);
+        sliderProbabilidadReproduccion.setValue(50);
 
-        sliderProbabilidadAparicionObjetos.setMin(1);
-        sliderProbabilidadAparicionObjetos.setMax(50);
-        sliderProbabilidadAparicionObjetos.setValue(100);
+        sliderProbabilidadAparicionObjetos.setMin(0);
+        sliderProbabilidadAparicionObjetos.setMax(100);
+        sliderProbabilidadAparicionObjetos.setValue(50);
 
-        sliderProbabilidadAumentoTesoro.setMin(1);
-        sliderProbabilidadAumentoTesoro.setMax(50);
-        sliderProbabilidadAumentoTesoro.setValue(100);
+        sliderProbabilidadAumentoTesoro.setMin(0);
+        sliderProbabilidadAumentoTesoro.setMax(100);
+        sliderProbabilidadAumentoTesoro.setValue(50);
 
-        sliderProbabilidadAumentoBiblioteca.setMin(1);
-        sliderProbabilidadAumentoBiblioteca.setMax(50);
-        sliderProbabilidadAumentoBiblioteca.setValue(100);
+        sliderProbabilidadAumentoBiblioteca.setMin(0);
+        sliderProbabilidadAumentoBiblioteca.setMax(100);
+        sliderProbabilidadAumentoBiblioteca.setValue(50);
 
-        sliderProbAparicionComida.setMin(1);
-        sliderProbAparicionComida.setMax(50);
-        sliderProbAparicionComida.setValue(100);
+        sliderProbAparicionComida.setMin(0);
+        sliderProbAparicionComida.setMax(100);
+        sliderProbAparicionComida.setValue(50);
 
-        sliderProbAparicionAgua.setMin(1);
-        sliderProbAparicionAgua.setMax(50);
-        sliderProbAparicionAgua.setValue(100);
+        sliderProbAparicionAgua.setMin(0);
+        sliderProbAparicionAgua.setMax(100);
+        sliderProbAparicionAgua.setValue(50);
 
-        sliderProbAparicionMontaña.setMin(1);
-        sliderProbAparicionMontaña.setMax(50);
-        sliderProbAparicionMontaña.setValue(100);
+        sliderProbAparicionMontaña.setMin(0);
+        sliderProbAparicionMontaña.setMax(100);
+        sliderProbAparicionMontaña.setValue(50);
 
-        sliderProbAparicionBiblioteca.setMin(1);
-        sliderProbAparicionBiblioteca.setMax(50);
-        sliderProbAparicionBiblioteca.setValue(100);
+        sliderProbAparicionBiblioteca.setMin(0);
+        sliderProbAparicionBiblioteca.setMax(100);
+        sliderProbAparicionBiblioteca.setValue(50);
 
-        sliderProbAparicionPozo.setMin(1);
-        sliderProbAparicionPozo.setMax(50);
-        sliderProbAparicionPozo.setValue(100);
+        sliderProbAparicionPozo.setMin(0);
+        sliderProbAparicionPozo.setMax(100);
+        sliderProbAparicionPozo.setValue(50);
 
-        sliderProbAparicionTesoro.setMin(1);
-        sliderProbAparicionTesoro.setMax(50);
-        sliderProbAparicionTesoro.setValue(100);
+        sliderProbAparicionTesoro.setMin(0);
+        sliderProbAparicionTesoro.setMax(100);
+        sliderProbAparicionTesoro.setValue(50);
 
         sliderTamañoAltura.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
