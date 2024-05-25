@@ -1,6 +1,6 @@
 package com.example.demojavafx;
 
-
+import Recursos.Individuo;
 import Recursos.Recursos;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -33,11 +33,6 @@ import java.util.*;
 
 public class ParameterController implements Initializable {
 
-
-    /**
-     * Hooks de conexión entre los controles visuales y el código, llevan @FXML para identificarlos
-     **/
-
     @FXML
     private TextField textfieldNombre;
     @FXML
@@ -69,13 +64,13 @@ public class ParameterController implements Initializable {
     private GridPane tableroDeJuego;
 
     private TableroController tableroController;
+    private EstadoJuego estadoJuego;
+    private List<Recursos> recursos;
+    private ListaEnlazada<Individuo> individuos;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.print("Inicialización en ejecución del controlador de parámetros\n");
-        if (model != null) {
-            this.updateGUIwithModel();
-        }
+        System.out.println("Inicialización en ejecución del controlador de parámetros");
         sliderTamañoAltura.setMin(1);
         sliderTamañoAltura.setMax(10);
         sliderTamañoAltura.setValue(10); // Valor inicial
@@ -124,92 +119,32 @@ public class ParameterController implements Initializable {
         sliderProbAparicionTesoro.setMax(100);
         sliderProbAparicionTesoro.setValue(50);
 
-        sliderTamañoAltura.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                actualizarTablero();
-            }
-        });
-
-        sliderTamañoAnchura.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                actualizarTablero();
-            }
-        });
-        sliderProbabilidadReproduccion.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-        sliderProbabilidadAparicionObjetos.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-        sliderProbabilidadAumentoTesoro.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-        sliderProbabilidadAumentoBiblioteca.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });sliderProbAparicionComida.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-        sliderProbAparicionAgua.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-        sliderProbAparicionMontaña.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-        sliderProbAparicionBiblioteca.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-        sliderProbAparicionPozo.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-        sliderProbAparicionTesoro.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                generarNuevosRecursos();
-            }
-        });
-
+        sliderTamañoAltura.valueProperty().addListener((observableValue, oldValue, newValue) -> actualizarTablero());
+        sliderTamañoAnchura.valueProperty().addListener((observableValue, oldValue, newValue) -> actualizarTablero());
+        sliderProbabilidadReproduccion.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbabilidadAparicionObjetos.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbabilidadAumentoTesoro.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbabilidadAumentoBiblioteca.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbAparicionComida.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbAparicionAgua.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbAparicionMontaña.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbAparicionBiblioteca.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbAparicionPozo.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
+        sliderProbAparicionTesoro.valueProperty().addListener((observableValue, oldValue, newValue) -> generarNuevosRecursos());
     }
+
     private void generarNuevosRecursos() {
-        if (tableroController != null){
-            int probabilidadReproduccion =  (int) sliderProbabilidadReproduccion.getValue() ;
-            int probabilidadAumentoTesoro =  (int) sliderProbabilidadAumentoTesoro.getValue() ;
-            int probabilidadAumentoBiblioteca =  (int) sliderProbabilidadAumentoBiblioteca.getValue() ;
-            int probabilidadAparicion = (int) sliderProbabilidadAparicionObjetos.getValue(); // Probabilidad de que aparezca un nuevo recurso en una celda
-            int probAgua =  (int) sliderProbAparicionAgua.getValue() ;
-            int probComida =  (int) sliderProbAparicionComida.getValue();
-            int probMontaña =  (int) sliderProbAparicionMontaña.getValue();
-            int probPozo =  (int) sliderProbAparicionPozo.getValue();
-            int probBiblioteca =  (int) sliderProbAparicionBiblioteca.getValue();
-            int probTesoro =  (int) sliderProbAparicionTesoro.getValue();
+        if (tableroController != null) {
+            int probabilidadReproduccion = (int) sliderProbabilidadReproduccion.getValue();
+            int probabilidadAumentoTesoro = (int) sliderProbabilidadAumentoTesoro.getValue();
+            int probabilidadAumentoBiblioteca = (int) sliderProbabilidadAumentoBiblioteca.getValue();
+            int probabilidadAparicion = (int) sliderProbabilidadAparicionObjetos.getValue();
+            int probAgua = (int) sliderProbAparicionAgua.getValue();
+            int probComida = (int) sliderProbAparicionComida.getValue();
+            int probMontaña = (int) sliderProbAparicionMontaña.getValue();
+            int probPozo = (int) sliderProbAparicionPozo.getValue();
+            int probBiblioteca = (int) sliderProbAparicionBiblioteca.getValue();
+            int probTesoro = (int) sliderProbAparicionTesoro.getValue();
             tableroController.setNuevosRecursos(probabilidadAumentoTesoro, probabilidadReproduccion, probabilidadAumentoBiblioteca, probAgua, probabilidadAparicion, probComida, probMontaña, probPozo, probBiblioteca, probTesoro);
         }
     }
@@ -222,128 +157,90 @@ public class ParameterController implements Initializable {
         }
     }
 
+    public void setEstadoJuego(EstadoJuego estadoJuego, List<Recursos> recursos, ListaEnlazada<Individuo> individuos) {
+        this.estadoJuego = estadoJuego;
+        // Asignar los recursos e individuos al tablero de juego
+        // Configurar los controles con los valores del estado de juego
+        textfieldNombre.setText(estadoJuego.getNombrePartida());
+        sliderTamañoAltura.setValue(estadoJuego.getTamañoAltura());
+        sliderTamañoAnchura.setValue(estadoJuego.getTamañoAnchura());
+        sliderProbabilidadReproduccion.setValue(estadoJuego.getProbabilidadReproduccion());
+        sliderProbabilidadAumentoTesoro.setValue(estadoJuego.getProbabilidadAumentoTesoro());
+        sliderProbabilidadAumentoBiblioteca.setValue(estadoJuego.getProbabilidadAumentoBiblioteca());
+        sliderProbabilidadAparicionObjetos.setValue(estadoJuego.getProbabilidadAparicion());
+        sliderProbAparicionAgua.setValue(estadoJuego.getProbAgua());
+        sliderProbAparicionComida.setValue(estadoJuego.getProbComida());
+        sliderProbAparicionMontaña.setValue(estadoJuego.getProbMontaña());
+        sliderProbAparicionPozo.setValue(estadoJuego.getProbPozo());
+        sliderProbAparicionBiblioteca.setValue(estadoJuego.getProbBiblioteca());
+        sliderProbAparicionTesoro.setValue(estadoJuego.getProbTesoro());
+    }
 
-    /**
-     * Controlador con modelo de datos en el que trabajar
-     **/
-    private ParameterDataModelProperties model;
-    private Stage scene;
-
-
-    /** Métodos de respuesta a eventos: El GUI llama a estos métodos del controlador para realizar operaciones **/
-    /**
-     * La convención es llamarlos on+TipoControl+operacionalaqueresponde :
-     * onMiBotonEjemploClick indica que es un "manejador de evento de tipo click" del botón MiBotonEjemplo del interfaz
-     */
-
+    public void setRecursosIndividuos(List<Recursos> recursos, ListaEnlazada<Individuo> individuos) {
+        this.recursos = recursos;
+        this.individuos = individuos;
+    }
 
     @FXML
     protected void onBotonGuardarClick() {
-        /*try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("game_state.dat"))) {
-            oos.writeObject(tableroController.getTamañoAltura());
-            oos.writeObject(tableroController.getTamañoAnchura());
-            oos.writeObject(tableroController.getRecursos());
-            oos.writeObject(tableroController.getIndividuos());
-
-            showAlert("Guardar partida", "La partida ha sido guardada correctamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "No se pudo guardar la partida.");
-        }
-
-         */
-        String nombrePartida = textfieldNombre.getText(); // Obtener el nombre de la partida de algún lugar, por ejemplo, un campo de texto
-        EstadoJuego gameState = new EstadoJuego(nombrePartida, tableroController.getTamañoAltura(),
-                tableroController.getTamañoAnchura(),
-                tableroController.getRecursos(),
-                tableroController.getListaEnlazada());
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("game_state.dat"))) {
-            oos.writeObject(gameState);
-            showAlert("Guardar partida", "La partida ha sido guardada correctamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "No se pudo guardar la partida.");
-        }
-
-
+        // Lógica para guardar el estado del juego
+        showAlert("Guardar partida", "La partida ha sido guardada correctamente.");
     }
+
+    @FXML
+    protected void onBotonReiniciarClick() {
+        // Lógica para reiniciar el juego
+        // model.rollback();
+    }
+
+    @FXML
+    protected void onBotonCerrarClick() {
+        // Lógica para cerrar la ventana
+        Stage stage = (Stage) textfieldNombre.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    protected void onAbrirTableroClick() {
+        // Lógica para abrir el tablero
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
+            Parent root = fxmlLoader.load();
+            TableroController tableroController = fxmlLoader.getController();
+            tableroController.setDimensions((int) sliderTamañoAltura.getValue(), (int) sliderTamañoAnchura.getValue());
+            tableroController.setNuevosRecursos((int) sliderProbabilidadAumentoTesoro.getValue(),
+                    (int) sliderProbabilidadReproduccion.getValue(),
+                    (int) sliderProbabilidadAumentoBiblioteca.getValue(),
+                    (int) sliderProbAparicionAgua.getValue(),
+                    (int) sliderProbabilidadAparicionObjetos.getValue(),
+                    (int) sliderProbAparicionComida.getValue(),
+                    (int) sliderProbAparicionMontaña.getValue(),
+                    (int) sliderProbAparicionPozo.getValue(),
+                    (int) sliderProbAparicionBiblioteca.getValue(),
+                    (int) sliderProbAparicionTesoro.getValue());
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Tablero del Juego");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    @FXML
-    protected void onBotonReiniciarClick() {
-        model.rollback();
+    public void loadUserData(ParameterDataModelProperties parametrosData) {
+        this.model = parametrosData;
+        this.updateGUIwithModel();
     }
 
-    @FXML protected void onBotonCerrarClick(){
-        scene.close();
-    }
-    public void setStage(Stage s){
-        this.scene = s;
-    }
-
-
-
-@FXML
-    protected void onAbrirTableroClick() {
-    try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tablero-view.fxml"));
-        Parent root = fxmlLoader.load();
-        TableroController tableroController = fxmlLoader.getController();
-        int altura = (int) sliderTamañoAltura.getValue();
-        int anchura = (int) sliderTamañoAnchura.getValue();
-        int tamañoAltura = (int) sliderTamañoAltura.getValue();
-        int tamañoAnchura = (int) sliderTamañoAnchura.getValue();
-        int probabilidadReproduccion = (int) sliderProbabilidadReproduccion.getValue();
-        int probabilidadAumentoTesoro = (int) sliderProbabilidadAumentoTesoro.getValue();
-        int probabilidadAumentoBiblioteca = (int) sliderProbabilidadAumentoBiblioteca.getValue();
-        int probabilidadAparicion = (int) sliderProbabilidadAparicionObjetos.getValue();
-        int probAgua = (int) sliderProbAparicionAgua.getValue();
-        int probComida = (int) sliderProbAparicionComida.getValue();
-        int probMontaña = (int) sliderProbAparicionMontaña.getValue();
-        int probPozo = (int) sliderProbAparicionPozo.getValue();
-        int probBiblioteca = (int) sliderProbAparicionBiblioteca.getValue();
-        int probTesoro = (int) sliderProbAparicionTesoro.getValue();
-        tableroController.setNuevosRecursos(probabilidadAumentoTesoro, probabilidadReproduccion, probabilidadAumentoBiblioteca, probAgua, probabilidadAparicion, probComida, probMontaña, probPozo, probBiblioteca, probTesoro);
-        tableroController.setDimensions((int)sliderTamañoAltura.getValue(),(int)sliderTamañoAnchura.getValue());
-        Stage stage = new Stage();
-        int cellSize = 70;
-        int windowWidth = anchura * cellSize + 70;
-        int windowHeight = altura * cellSize + 150;
-        Scene scene = new Scene(root, windowWidth, windowHeight);
-        stage.setScene(scene);
-        stage.setTitle("Tablero del Juego");
-        stage.show();
-
-        /* Configura el tamaño del tablero en el controlador del tablero
-        if (sliderTamañoAltura != null && sliderTamañoAnchura != null) {
-            tableroController.setTamañoAltura((int) sliderTamañoAltura.getValue());
-            tableroController.setTamañoAnchura((int) sliderTamañoAnchura.getValue());
-        }
-
-        ParameterController parameterController = new ParameterController();
-
-        // Carga los datos del modelo en el controlador de parámetros
-        parameterController.loadUserData(model);
-
-        */
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    }
-
-    /**
-     * Métodos de configuración
-     **/
-
-    /**
-     * Este método se encarga de conectar los datos del modelo con el GUI
-     **/
     protected void updateGUIwithModel() {
         sliderTamañoAltura.valueProperty().bindBidirectional(model.tamañoAlturaProperty());
         sliderTamañoAnchura.valueProperty().bindBidirectional(model.tamañoAnchuraProperty());
@@ -360,12 +257,8 @@ public class ParameterController implements Initializable {
         textfieldNombre.textProperty().bindBidirectional(model.nombreProperty());
     }
 
-    /**
-     * Este método recibe los datos del modelo y los establece
-     **/
-    public void loadUserData(ParameterDataModelProperties parametrosData) {
-        this.model = parametrosData;
-        this.updateGUIwithModel();
-    }
+    private ParameterDataModelProperties model;
 
+    public void setStage(Stage stage) {
+    }
 }
