@@ -3,6 +3,7 @@ package com.example.demojavafx;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,6 +21,13 @@ public class CargarPartidaController {
     private ParameterDataModel parametrosData = new ParameterDataModel("Juan", 10, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
     private ParameterDataModelProperties modeloParaGUICompartido = new ParameterDataModelProperties(parametrosData);
     private ListaEnlazada<ParameterDataModel> parametrosDataList = new ListaEnlazada<>();
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     @FXML
     public void onCargarPartidaButton() {
@@ -39,7 +47,8 @@ public class CargarPartidaController {
                 e.printStackTrace();
             }
         } else {
-            respuesta.setText("No existe una partida con el nombre introducido");
+            if (respuesta != null) {
+                showAlert("Error", "No existe una partida con el nombre introducido.");
         }
     }
         /*
@@ -104,3 +113,4 @@ public class CargarPartidaController {
 
 
     }
+}
