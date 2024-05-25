@@ -128,6 +128,19 @@ public class TableroController {
             }
         }
     }
+    public void setRecursosIndividuos(){
+        tableroDeJuego.getChildren().clear();
+
+        // Agregar los recursos al tablero
+        for (Recursos recurso : recursos) {
+            agregarRecursoAlTablero(recurso);
+        }
+
+        // Agregar los individuos al tablero
+        for (int i = 0; i < listaEnlazada.getNumeroElementos(); i++) {
+            agregarIndividuoAlTablero(listaEnlazada.getElemento(i).getData());
+        }
+    }
 
     private void onCellClicked(int row, int column) {
         StringBuilder info = new StringBuilder();

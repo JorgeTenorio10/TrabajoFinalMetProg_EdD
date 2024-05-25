@@ -1,8 +1,11 @@
 package com.example.demojavafx;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -18,9 +21,27 @@ public class CargarPartidaController {
     private ParameterDataModelProperties modeloParaGUICompartido = new ParameterDataModelProperties(parametrosData);
     private ListaEnlazada<ParameterDataModel> parametrosDataList = new ListaEnlazada<>();
 
-
     @FXML
-    public ListaEnlazada<ParameterDataModel> onCargarPartidaButton() {
+    public void onCargarPartidaButton() {
+        String nombrePartida = TextFieldCargarPartida.getText().trim();
+        if ("Pepe".equals(nombrePartida)) {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("parameters-view.fxml"));
+            try {
+                Scene scene = new Scene(fxmlLoader.load(), 520, 740);
+                stage.setTitle("Establezca parámetros: ");
+                stage.setScene(scene);
+                ParameterController p = fxmlLoader.getController();
+                p.loadUserData(this.modeloParaGUICompartido); //Carga los datos del modelo en el gui, todas las ventanas comparten el mismo en este caso
+                p.setStage(stage);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            respuesta.setText("No existe una partida con el nombre introducido");
+        }
+    }
         /*
         GameDataHandler gameDataHandler = new GameDataHandler();
         ListaEnlazada<ParameterDataModel> loadedData = gameDataHandler.loadGame();
@@ -55,7 +76,7 @@ public class CargarPartidaController {
         }
     }
 
-         */
+
         ListaEnlazada<ParameterDataModel> gameData = new ListaEnlazada<>();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("game_state.dat"))) {
             while (true) {
@@ -77,5 +98,9 @@ public class CargarPartidaController {
         }
         return gameData;
     }
-}
 
+         */
+
+
+
+    }
