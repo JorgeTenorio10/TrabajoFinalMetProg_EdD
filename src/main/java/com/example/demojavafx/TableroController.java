@@ -197,6 +197,7 @@ public class TableroController {
                             Individuo i1= new Individuo(n_individuos,turno, ind1.getTurnosDeVida()+ ind2.getTurnosDeVida(),(ind1.getProbabilidadReproduccion()+ind2.getProbabilidadReproduccion())/2, (ind1.getProbabilidadClonacion()+ind2.getProbabilidadClonacion())/2,(ind1.getProbabilidadMuerte()+ind2.getProbabilidadMuerte())/2,ind1.getX(),ind2.getY(),tipo );
                             listaEnlazada.add(i1);
                             agregarIndividuoAlTablero(i1);
+                            System.out.println("Se produjo la reproduccion");
                         }
                     }
                 }
@@ -306,19 +307,12 @@ public class TableroController {
             int r1 = random.nextInt(tamañoAnchura - min-1) + min;
             int r2 = random.nextInt(tamañoAltura - min-1) + min;
             if (listaEnlazada.getElemento(i).getData().getTipo() == "Básico") {
-                eliminarIndividuoDeTablero(listaEnlazada.getElemento(i).getData().getX()-1,listaEnlazada.getElemento(i).getData().getY()-1,listaEnlazada.getElemento(i).getData());
-                listaEnlazada.getElemento(i).getData().setX(r1);
-                listaEnlazada.getElemento(i).getData().setY(r2);
-                agregarIndividuoAlTablero(listaEnlazada.getElemento(i).getData());
+                moverIndividuo(listaEnlazada.getElemento(i).getData(),r1,r2);
             } else if (listaEnlazada.getElemento(i).getData().getTipo() == "Normal") {
                 int indice = random.nextInt(recursos.size());
-                eliminarIndividuoDeTablero(listaEnlazada.getElemento(i).getData().getX()-1,listaEnlazada.getElemento(i).getData().getY()-1,listaEnlazada.getElemento(i).getData());
-                listaEnlazada.getElemento(i).getData().setX(recursos.get(indice).getX());
-                listaEnlazada.getElemento(i).getData().setY(recursos.get(indice).getY());
-                agregarIndividuoAlTablero(listaEnlazada.getElemento(i).getData());
+                moverIndividuo(listaEnlazada.getElemento(i).getData(),recursos.get(indice).getX(),recursos.get(indice).getY());
             }
             else if(listaEnlazada.getElemento(i).getData().getTipo()=="Avanzado"){
-                eliminarIndividuoDeTablero(listaEnlazada.getElemento(i).getData().getX()-1,listaEnlazada.getElemento(i).getData().getY()-1,listaEnlazada.getElemento(i).getData());
                 int distancia=200;//introducimos un valor grande para que no haya problema
                 Recursos recursoMasCercano=null;
                 for (int j=0; j<recursos.size(); j++){
@@ -329,11 +323,8 @@ public class TableroController {
                         distancia=dist;
                         recursoMasCercano= recursos.get(j);
                     }
-                    listaEnlazada.getElemento(i).getData().setX(recursoMasCercano.getX()+1);
-                    listaEnlazada.getElemento(i).getData().setY(recursoMasCercano.getY()+1);
-                    distancia=200;
+                    moverIndividuo(listaEnlazada.getElemento(i).getData(),recursoMasCercano.getX()+1,recursoMasCercano.getY()+1);
                 }
-                agregarIndividuoAlTablero(listaEnlazada.getElemento(i).getData());
             }
         }
     }
@@ -391,6 +382,7 @@ public class TableroController {
                     n_individuos++;
                     Individuo ind1= new Individuo(n_individuos,turno,ind.getTurnosDeVida(),ind.getProbabilidadReproduccion(),ind.getProbabilidadClonacion(),ind.getProbabilidadMuerte(),ind.getX(),ind.getY(),ind.getTipo());
                     individuosAñadir.add(ind1);
+                    System.out.println("Se producio la clonacion");
                 }
             }
         }
@@ -399,14 +391,16 @@ public class TableroController {
             agregarIndividuoAlTablero(individuosAñadir.getElemento(i).getData());
         }
     }
-    public void muerteIndividuos(){
+    public void muerteIndividuos() throws NullPointerException{
         for(int i=0; i<listaEnlazada.getNumeroElementos();i++){
             float aleatoria=(float)(Math.random()*100)+1;
             Individuo ind = listaEnlazada.getElemento(i).getData();
             if(ind.getProbabilidadClonacion()>aleatoria){
                 if(comprobarTamaño(ind.getX(),ind.getY())){
                     eliminarIndividuoDeTablero(ind.getX(),ind.getY(),listaEnlazada.getElemento(i).getData());
+                    eliminarIndividuo(listaEnlazada.getElemento(i).getData());
                     listaEnlazada.del(i);
+                    System.out.println("Se produjo la muerte");
                 }
             }
         }
@@ -414,21 +408,7 @@ public class TableroController {
     public void recursoEfecto(){
         for (int i = 0 ; i < listaEnlazada.getNumeroElementos();i++){
             for (int j = 0; j< recursos.size(); j++){
-                if (listaEnlazada.getElemento(i).getData().getX()==(recursos.get(j).getX()+1)&&listaEnlazada.getElemento(i).getData().getY()==(recursos.get(j).getY()+1)){
-
-                    if (recursos.get(j).getClass().getSimpleName()=="Agua"){listaEnlazada.getElemento(i).getData().setTurnosDeVida(listaEnlazada.getElemento(i).getData().getTurnosDeVida()+2);}
-                    if(recursos.get(j).getClass().getSimpleName()=="Comida"){listaEnlazada.getElemento(i).getData().setTurnosDeVida(listaEnlazada.getElemento(i).getData().getTurnosDeVida()+10);}
-                    if(recursos.get(j).getClass().getSimpleName()=="Montaña"){listaEnlazada.getElemento(i).getData().setTurnosDeVida(listaEnlazada.getElemento(i).getData().getTurnosDeVida()-2);}
-                    if(recursos.get(j).getClass().getSimpleName()=="Pozo"){listaEnlazada.getElemento(i).getData().setTurnosDeVida(0);}
-                    if (recursos.get(j).getClass().getSimpleName()=="Tesoro"){listaEnlazada.getElemento(i).getData().setProbabilidadReproduccion(listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion());
-                        if(listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()>100){listaEnlazada.getElemento(i).getData().setProbabilidadReproduccion(100);
-                        }
-                    }
-                    if (recursos.get(j).getClass().getSimpleName()=="Biblioteca"){listaEnlazada.getElemento(i).getData().setProbabilidadClonacion(listaEnlazada.getElemento(i).getData().getProbabilidadClonacion());
-                        if( listaEnlazada.getElemento(i).getData().getProbabilidadClonacion()>100){
-                            listaEnlazada.getElemento(i).getData().setProbabilidadClonacion(100);
-                        }
-                    }
+                if (listaEnlazada.getElemento(i).getData().getX()==(recursos.get(j).getX()+1)&&(listaEnlazada.getElemento(i).getData().getY()==(recursos.get(j).getY()+1))){
                     efectos(listaEnlazada.getElemento(i).getData(),recursos.get(j));
                 }
             }
@@ -571,7 +551,48 @@ public class TableroController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    private void imprimirIndividuosEnTablero(){
+        for (int i=0; i<listaEnlazada.getNumeroElementos();i++){
+            agregarIndividuoAlTablero(listaEnlazada.getElemento(i).getData());
+        }
+    }
+    private void cambiarPosicionIndividuosTablero(){
+        for(int i=0; i<listaEnlazada.getNumeroElementos();i++){
+            eliminarIndividuoDeTablero(listaEnlazada.getElemento(i).getData().getX()-1,listaEnlazada.getElemento(i).getData().getY()-1,listaEnlazada.getElemento(i).getData());
+            removerIndividuoDeTablero(listaEnlazada.getElemento(i).getData());
+        }
+    }
+    public void moverIndividuo(Individuo individuo, int newX, int newY) {
+        // Eliminar el individuo de la casilla actual
+        VBox currentCell = (VBox) getNodeByRowColumnIndex(individuo.getY() - 1, individuo.getX() - 1, tableroDeJuego);
+        if (currentCell != null) {
+            currentCell.getChildren().removeIf(node -> node instanceof Text && ((Text) node).getText().equals(individuo.getTipo()));
+        }
+
+        // Actualizar la posición del individuo
+        individuo.setX(newX);
+        individuo.setY(newY);
+
+        // Añadir el individuo a la nueva casilla
+        VBox newCell = (VBox) getNodeByRowColumnIndex(newY - 1, newX - 1, tableroDeJuego);
+        if (newCell != null) {
+            Text individuoText = new Text(individuo.getTipo());
+            individuoText.setFill(Color.RED);
+            individuoText.setFont(Font.font("System", 12));
+            newCell.getChildren().add(individuoText);
+        }
+    }
+    public void eliminarIndividuo(Individuo individuo) {
+        // Eliminar el individuo de su casilla actual
+        VBox currentCell = (VBox) getNodeByRowColumnIndex(individuo.getY() - 1, individuo.getX() - 1, tableroDeJuego);
+        if (currentCell != null) {
+            currentCell.getChildren().removeIf(node -> node instanceof Text && ((Text) node).getText().equals(individuo.getTipo()));
+        }
+        // Eliminar el individuo de la lista enlazada
+        listaEnlazada.del(listaEnlazada.getPosicion(individuo));
+    }
 }
+
    /* protected void onNextTurn() {
         MatrizDePosiciones MatrizIndividuos= new MatrizDePosiciones(this.tamañoAltura,this.tamañoAnchura);
         MatrizDePosicionesRecurso MatrizRecursos= new MatrizDePosicionesRecurso(this.tamañoAltura,this.tamañoAnchura);
