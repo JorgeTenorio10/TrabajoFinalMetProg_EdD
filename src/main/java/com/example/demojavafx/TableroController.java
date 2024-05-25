@@ -112,16 +112,12 @@ public class TableroController {
                         .append(", Tiempo de vida restante: ").append(recurso.getTiempoAparicion()).append("\n");
             }
         }
-
         // Obtener información de los individuos en esta celda
         info.append("Individuos:\n");
-        ElementoLE<Individuo> current = listaEnlazada.getPrimero();
-        while (current != null) {
-            Individuo individuo = current.getData();
-            if (individuo.getX() == column && individuo.getY() == row) {
-                //No se como imprimirlo miralo tu
+        for(int j=0; j<listaEnlazada.getNumeroElementos(); j++) {
+            if(listaEnlazada.getElemento(j).getData().getX()==column +1 && listaEnlazada.getElemento(j).getData().getY()==row+1){
+                info.append(listaEnlazada.getElemento(j).getData());
             }
-            current = current.getSiguiente();
         }
 
         // Mostrar la información en una alerta
@@ -133,6 +129,66 @@ public class TableroController {
         String[] tiposRecursos = {"Agua", "Comida", "Montaña", "Pozo", "Biblioteca", "Tesoro"};
         int index = random.nextInt(tiposRecursos.length);
         return tiposRecursos[index];
+    }
+    public void reproduccionIndividuos(){
+        float random= (float) ((Math.random()*1000)+1);
+        for(int i=0; i<listaEnlazada.getNumeroElementos();i++){
+            Individuo ind1= listaEnlazada.getElemento(i).getData();
+            for(int j=i+1; j<listaEnlazada.getNumeroElementos();j++){
+                Individuo ind2= listaEnlazada.getElemento(j).getData();
+                for(int l=j+1; l<listaEnlazada.getNumeroElementos();l++){
+                    if(listaEnlazada.getElemento(i).getData().getX()==listaEnlazada.getElemento(j).getData().getX()&&listaEnlazada.getElemento(j).getData().getY()==listaEnlazada.getElemento(i).getData().getY()){
+                        if(listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()*listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()>=random){
+                            if(comprobarTamaño(listaEnlazada.getElemento(i).getData().getX(),listaEnlazada.getElemento(i).getData().getY())==true){
+                                n_individuos=n_individuos+1;
+                                String tipo;
+                                if(ind1.getTipo()==ind2.getTipo()){
+                                    tipo=ind1.getTipo();
+                                }
+                                else{
+                                    float nrand= (float) ((Math.random()*100)+1);
+                                    float probAumentoReproduccion=20;
+                                    if ((ind1.getTipo()=="básico"||ind1.getTipo()=="normal")&&(ind2.getTipo()=="normal"||ind2.getTipo()=="avanzado")){
+                                        if(probAumentoReproduccion>nrand){
+                                            tipo= ind2.getTipo();
+                                        }
+                                        else{
+                                            tipo=ind1.getTipo();
+                                        }
+                                    }
+                                    else if((ind2.getTipo()=="básico"||ind2.getTipo()=="normal")&&(ind1.getTipo()=="normal"||ind1.getTipo()=="avanzado")){
+                                        if(probAumentoReproduccion>nrand){
+                                            tipo= ind1.getTipo();
+                                        }
+                                        else{
+                                            tipo=ind2.getTipo();
+                                        }
+                                    }
+                                    else{
+                                        tipo="básico";
+                                    }
+                                }
+                                Individuo i1= new Individuo(n_individuos,turno, ind1.getTurnosDeVida()+ ind2.getTurnosDeVida(),(ind1.getProbabilidadReproduccion()+ind2.getProbabilidadReproduccion())/2, (ind1.getProbabilidadClonacion()+ind2.getProbabilidadClonacion())/2,(ind1.getProbabilidadMuerte()+ind2.getProbabilidadMuerte())/2,ind1.getX(),ind2.getY(),tipo );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public boolean comprobarTamaño(int x, int y){
+        int contador=0;
+        for (int i=0; i<listaEnlazada.getNumeroElementos();i++){
+            if(x==listaEnlazada.getElemento(i).getData().getX()&&y==listaEnlazada.getElemento(i).getData().getY()){
+                contador++;
+            }
+        }
+        if (contador>=3){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     @FXML
@@ -199,8 +255,12 @@ public class TableroController {
                 removerRecursoDeTablero(recurso);
             }
         }
+        //Dependiendo el tipo del individuo se desplazaran a un lado o otro
         movimientoIndividuos();
-
+        //Los recursos que se encuentren en la misma posicion que un individuo realizaran sus efectos
+        recursoEfecto();
+        //Reproduccion de individuos
+        reproduccionIndividuos();
         // Generar nuevos recursos según sus probabilidades
         generarNuevosRecursos();
 
@@ -224,7 +284,70 @@ public class TableroController {
                 listaEnlazada.getElemento(i).getData().setY(recursos.get(indice).getY());
             }
             else if(listaEnlazada.getElemento(i).getData().getTipo()=="Avanzado"){
+                int distancia=200;//introducimos un valor grande para que no haya problema
+                Recursos recursoMasCercano=null;
+                for (int j=0; j<recursos.size(); j++){
+                    int distancia1= Math.abs(listaEnlazada.getElemento(i).getData().getX() - (recursos.get(j).getX()+1));
+                    int distancia2= Math.abs(listaEnlazada.getElemento(i).getData().getY() - (recursos.get(j).getY()+1));
+                    int dist= distancia1+distancia2;
+                    if (dist<distancia&&dist!=0){
+                        distancia=dist;
+                        recursoMasCercano= recursos.get(j);
+                    }
+                    listaEnlazada.getElemento(i).getData().setX(recursoMasCercano.getX()+1);
+                    listaEnlazada.getElemento(i).getData().setY(recursoMasCercano.getY()+1);
+                    distancia=200;
+                }
+            }
+        }
+    }
+    public void efectos(Individuo i1,Recursos recurso){
+        String prueba=recurso.getClass().getSimpleName();
+        if (recurso.getClass().getSimpleName()=="Agua"){
+            i1.setTurnosDeVida(i1.getTurnosDeVida()+2);
+        }
+        if(recurso.getClass().getSimpleName()=="Comida"){
+            i1.setTurnosDeVida(i1.getTurnosDeVida()+10);
+        }
+        if(recurso.getClass().getSimpleName()=="Montaña"){
+            i1.setTurnosDeVida(i1.getTurnosDeVida()-2);
+        }
+        if(recurso.getClass().getSimpleName()=="Pozo"){
+            i1.setTurnosDeVida(0);
+        }
+        if (recurso.getClass().getSimpleName()=="Tesoro"){
+            i1.setProbabilidadReproduccion(i1.getProbabilidadReproduccion());
+            if(i1.getProbabilidadReproduccion()>100){
+                i1.setProbabilidadReproduccion(100);
+            }
+        }
+        if (recurso.getClass().getSimpleName()=="Biblioteca"){
+            i1.setProbabilidadClonacion(i1.getProbabilidadClonacion());
+            if( i1.getProbabilidadClonacion()>100){
+                i1.setProbabilidadClonacion(100);
+            }
+        }
+    }
+    public void recursoEfecto(){
+        for (int i = 0 ; i < listaEnlazada.getNumeroElementos();i++){
+            for (int j = 0; j< recursos.size(); j++){
+                if (listaEnlazada.getElemento(i).getData().getX()==(recursos.get(j).getX()+1)&&listaEnlazada.getElemento(i).getData().getY()==(recursos.get(j).getY()+1)){
 
+                    if (recursos.get(j).getClass().getSimpleName()=="Agua"){listaEnlazada.getElemento(i).getData().setTurnosDeVida(listaEnlazada.getElemento(i).getData().getTurnosDeVida()+2);}
+                    if(recursos.get(j).getClass().getSimpleName()=="Comida"){listaEnlazada.getElemento(i).getData().setTurnosDeVida(listaEnlazada.getElemento(i).getData().getTurnosDeVida()+10);}
+                    if(recursos.get(j).getClass().getSimpleName()=="Montaña"){listaEnlazada.getElemento(i).getData().setTurnosDeVida(listaEnlazada.getElemento(i).getData().getTurnosDeVida()-2);}
+                    if(recursos.get(j).getClass().getSimpleName()=="Pozo"){listaEnlazada.getElemento(i).getData().setTurnosDeVida(0);}
+                    if (recursos.get(j).getClass().getSimpleName()=="Tesoro"){listaEnlazada.getElemento(i).getData().setProbabilidadReproduccion(listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion());
+                        if(listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()>100){listaEnlazada.getElemento(i).getData().setProbabilidadReproduccion(100);
+                        }
+                    }
+                    if (recursos.get(j).getClass().getSimpleName()=="Biblioteca"){listaEnlazada.getElemento(i).getData().setProbabilidadClonacion(listaEnlazada.getElemento(i).getData().getProbabilidadClonacion());
+                        if( listaEnlazada.getElemento(i).getData().getProbabilidadClonacion()>100){
+                            listaEnlazada.getElemento(i).getData().setProbabilidadClonacion(100);
+                        }
+                    }
+                    efectos(listaEnlazada.getElemento(i).getData(),recursos.get(j));
+                }
             }
         }
     }
@@ -311,7 +434,7 @@ public class TableroController {
         System.out.println("Recursos actuales:");
         for (Recursos recurso : recursos) {
             System.out.println("Tipo: " + recurso.getClass().getSimpleName() +
-                    ", Posición: (" + recurso.getX() + ", " + recurso.getY() + ")" +
+                    ", Posición: (" + recurso.getX() + 1 + ", " + recurso.getY()+ 1 + ")" +
                     ", Tiempo de vida restante: " + recurso.getTiempoAparicion());
         }
     }
