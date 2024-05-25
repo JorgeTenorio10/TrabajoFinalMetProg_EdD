@@ -131,16 +131,15 @@ public class TableroController {
         return tiposRecursos[index];
     }
     public void reproduccionIndividuos(){
-        float random= (float) ((Math.random()*1000)+1);
+        float random= (float) ((Math.random()*10000)+1);
         for(int i=0; i<listaEnlazada.getNumeroElementos();i++){
             Individuo ind1= listaEnlazada.getElemento(i).getData();
             for(int j=i+1; j<listaEnlazada.getNumeroElementos();j++){
                 Individuo ind2= listaEnlazada.getElemento(j).getData();
-                for(int l=j+1; l<listaEnlazada.getNumeroElementos();l++){
                     if(listaEnlazada.getElemento(i).getData().getX()==listaEnlazada.getElemento(j).getData().getX()&&listaEnlazada.getElemento(j).getData().getY()==listaEnlazada.getElemento(i).getData().getY()){
                         if(listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()*listaEnlazada.getElemento(i).getData().getProbabilidadReproduccion()>=random){
-                            if(comprobarTamaño(listaEnlazada.getElemento(i).getData().getX(),listaEnlazada.getElemento(i).getData().getY())==true){
-                                n_individuos=n_individuos+1;
+                            if(comprobarTamaño(listaEnlazada.getElemento(i).getData().getX(), listaEnlazada.getElemento(i).getData().getY())){
+                                n_individuos++;
                                 String tipo;
                                 if(ind1.getTipo()==ind2.getTipo()){
                                     tipo=ind1.getTipo();
@@ -169,11 +168,11 @@ public class TableroController {
                                     }
                                 }
                                 Individuo i1= new Individuo(n_individuos,turno, ind1.getTurnosDeVida()+ ind2.getTurnosDeVida(),(ind1.getProbabilidadReproduccion()+ind2.getProbabilidadReproduccion())/2, (ind1.getProbabilidadClonacion()+ind2.getProbabilidadClonacion())/2,(ind1.getProbabilidadMuerte()+ind2.getProbabilidadMuerte())/2,ind1.getX(),ind2.getY(),tipo );
+                                listaEnlazada.add(i1);
                             }
                         }
                     }
                 }
-            }
         }
     }
     public boolean comprobarTamaño(int x, int y){
@@ -205,7 +204,7 @@ public class TableroController {
                 if (cell != null) {
                     if (cell.getChildren().stream().filter(node -> node instanceof Text).count() < 3) {
                         Text individuoText = new Text(tipoIndividuo);
-                        n_individuos = n_individuos + 1;
+                        n_individuos++;
                         individuoText.setFill(Color.RED); // Color diferente para los individuos
                         individuoText.setFont(Font.font("System", 12));
                         cell.getChildren().add(individuoText);
@@ -325,6 +324,36 @@ public class TableroController {
             i1.setProbabilidadClonacion(i1.getProbabilidadClonacion());
             if( i1.getProbabilidadClonacion()>100){
                 i1.setProbabilidadClonacion(100);
+            }
+        }
+    }
+
+    public int getTamañoAnchura() {
+        return tamañoAnchura;
+    }
+
+    public int getTamañoAltura() {
+        return tamañoAltura;
+    }
+
+    public ListaEnlazada<Individuo> getListaEnlazada() {
+        return listaEnlazada;
+    }
+    public List<Recursos> getRecursos() {
+        return recursos;
+    }
+
+
+
+    public void clonacion(){
+        for(int i=0; i<listaEnlazada.getNumeroElementos();i++){
+            float aleatorio= (float)(Math.random()*100)+1;
+            Individuo ind=listaEnlazada.getElemento(i).getData();
+            if (ind.getProbabilidadClonacion()>aleatorio){
+                if(comprobarTamaño(ind.getX(),ind.getY())){
+                    Individuo ind1= new Individuo(n_individuos,turno,ind.getTurnosDeVida(),ind.getProbabilidadReproduccion(),ind.getProbabilidadClonacion(),ind.getProbabilidadMuerte(),ind.getX(),ind.getY(),ind.getTipo());
+                    listaEnlazada.add(ind1);
+                }
             }
         }
     }
