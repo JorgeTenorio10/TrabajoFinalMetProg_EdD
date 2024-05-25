@@ -445,17 +445,16 @@ public class TableroController {
     }
 
     private void generarNuevosRecursos() {
-
             for (int i = 0; i < tamañoAltura; i++) {
                 for (int j = 0; j < tamañoAnchura; j++) {
-                    if (random.nextDouble() < probabilidadAparicion/100) {
-                        double r = random.nextDouble();
+                    if ((float)(Math.random()*100)+1 < probabilidadAparicion) {
+                        float r=(float)(Math.random()*100)+1;
                         String tipoRecurso;
-                        if (r < probAgua/100) tipoRecurso = "Agua";
-                        else if (r < probAgua/100 + probComida/100) tipoRecurso = "Comida";
-                        else if (r < probAgua/100 + probComida/100 + probMontaña/100) tipoRecurso = "Montaña";
-                        else if (r < probAgua/100 + probComida/100 + probMontaña/100 + probPozo/100) tipoRecurso = "Pozo";
-                        else if (r < probAgua/100 + probComida/100 + probMontaña/100 + probPozo/100 + probBiblioteca/100)
+                        if (r < probAgua) tipoRecurso = "Agua";
+                        else if (r < probAgua + probComida) tipoRecurso = "Comida";
+                        else if (r < probAgua + probComida + probMontaña) tipoRecurso = "Montaña";
+                        else if (r < probAgua + probComida + probMontaña + probPozo) tipoRecurso = "Pozo";
+                        else if (r < probAgua + probComida + probMontaña + probPozo + probBiblioteca)
                             tipoRecurso = "Biblioteca";
                         else tipoRecurso = "Tesoro";
 
